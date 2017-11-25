@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">GNOME Connect</string>
+    <string name="add_computer_button">Verbinde einen Computer mit GNOME Connect</string>
+    <string name="connect_with">Verbinden mit: </string>
+    <string name="available_decives">Verfügbare Geräte</string>
+    <string name="connected_decives">Verbundene Geräte</string>
+    <string name="switch_on">an</string>
+    <string name="switch_off">aus</string>
+
+
+</resources>

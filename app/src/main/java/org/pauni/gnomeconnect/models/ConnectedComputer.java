@@ -22,6 +22,7 @@ public class ConnectedComputer extends Computer {
         if (!computer.isComplete()) {
             throw new Exception("Computer is not complete. Please make sure, all fields of the passed computer are initialized with @NonNull");
         }
+
         setFingerprint(computer.getFingerprint());
         setIpAddress(computer.getIpAddress());
         setModel(computer.getModel());

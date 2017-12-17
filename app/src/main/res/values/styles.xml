@@ -8,6 +8,7 @@
         <item name="titleTextColor">@android:color/white</item>
     </style>
 
+
     <!-- No action bar theme for usage of toolbar-->
     <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -16,8 +17,13 @@
         <item name="titleTextColor">@android:color/white</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="actionOverflowButtonStyle">@style/OverFlow</item>
     </style>
 
+
+    <style name="OverFlow" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="android:tint">@android:color/white</item>
+    </style>
 
 
 

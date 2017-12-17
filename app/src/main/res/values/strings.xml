@@ -7,5 +7,8 @@
     <string name="switch_on">an</string>
     <string name="switch_off">aus</string>
 
-
+    <!-- optionMenu menu_main -->
+    <string name="settings">Einstellungen</string>
+    <string name="help">Hilfe</string>
+    <string name="close">Beenden</string>
 </resources>

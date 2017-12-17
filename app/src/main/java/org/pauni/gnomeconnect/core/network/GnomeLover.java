@@ -6,12 +6,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import org.json.JSONObject;
 import org.pauni.gnomeconnect.R;
 import org.pauni.gnomeconnect.core.models.Computer;
 import org.pauni.gnomeconnect.core.models.ConnectedComputer;
 import org.pauni.gnomeconnect.core.models.Packet.GCPackage;
-import org.pauni.gnomeconnect.core.models.Specs;
 import org.pauni.gnomeconnect.core.models.PairRequest;
 import org.pauni.gnomeconnect.core.models.Prefs;
 
@@ -86,6 +84,10 @@ public class GnomeLover {
      *      PRIVATE METHODS
      */
     private void handlePairResponse(GCPackage gcPackage) {
+        if (gcPackage == null) {
+            setState(STATE_FAILED);
+            return;
+        }
         Computer computer = new Computer(gcPackage.getData());
 
         // Adding the information that was in the GCPackage header

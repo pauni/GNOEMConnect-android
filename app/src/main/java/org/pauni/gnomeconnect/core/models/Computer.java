@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.pauni.gnomeconnect.core.interfaces.Specifications;
 
 
 /**
@@ -40,28 +41,28 @@ public class Computer {
 
         // Json obj don't necessarily have all fields. So each is checked individually
         try { // device name
-            this.name        = json.getString(Specs.Device.NAME);
-        } catch (JSONException e) { info = "field "+Specs.Device.NAME + " not found"; }
+            this.name        = json.getString(Specifications.Device.NAME);
+        } catch (JSONException e) { info = "field "+ Specifications.Device.NAME + " not found"; }
 
         try { // fingerprint
-            this.fingerprint = json.getString(Specs.Packet.FINGERPRINT);
-        } catch (JSONException e) {info += "field "+Specs.Packet.FINGERPRINT + " not found";}
+            this.fingerprint = json.getString(Specifications.Packet.FINGERPRINT);
+        } catch (JSONException e) {info += "field "+ Specifications.Packet.FINGERPRINT + " not found";}
 
         try { // version
-            this.version     = json.getString(Specs.Packet.VERSION);
-        } catch (JSONException e) {info += "field "+Specs.Packet.VERSION + " not found";}
+            this.version     = json.getString(Specifications.Packet.VERSION);
+        } catch (JSONException e) {info += "field "+ Specifications.Packet.VERSION + " not found";}
 
         try { // os
-            this.os          = json.getString(Specs.Device.OS);
-        } catch (JSONException e) {info += "field "+Specs.Device.OS + " not found";}
+            this.os          = json.getString(Specifications.Device.OS);
+        } catch (JSONException e) {info += "field "+ Specifications.Device.OS + " not found";}
 
         try { // model
-            this.model       = json.getString(Specs.Device.MODEL);
-        } catch (JSONException e) {info += "field "+Specs.Device.MODEL + " not found";}
+            this.model       = json.getString(Specifications.Device.MODEL);
+        } catch (JSONException e) {info += "field "+ Specifications.Device.MODEL + " not found";}
 
         try { // public key
-            this.publicKey   = json.getString(Specs.Device.PUBLIC_KEY);
-        } catch (JSONException e) {info += "field "+Specs.Device.PUBLIC_KEY + " not found";}
+            this.publicKey   = json.getString(Specifications.Device.PUBLIC_KEY);
+        } catch (JSONException e) {info += "field "+ Specifications.Device.PUBLIC_KEY + " not found";}
 
         Log.i("Computer", "Constructor from Json Errors: " + info);
 

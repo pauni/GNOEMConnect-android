@@ -2,7 +2,7 @@ package org.pauni.gnomeconnect.core.models.reports;
 
 import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
-import org.pauni.gnomeconnect.core.models.Specs;
+import org.pauni.gnomeconnect.core.interfaces.Specifications;
 
 /**
  *      Reports consists of their static attributes, that are updated
@@ -14,7 +14,7 @@ import org.pauni.gnomeconnect.core.models.Specs;
  */
 
 public class ConnectivityReport implements GCPackageData {
-    private static final String TYPE = Specs.TYPE_CONNECTIVITY_REPORT;
+    private static final String TYPE = Specifications.TYPE_CONNECTIVITY_REPORT;
 
 
     private static String wifiEnabled   = null;
@@ -54,11 +54,11 @@ public class ConnectivityReport implements GCPackageData {
     public JSONObject toJsonObject() {
         try {
             JSONObject cntReport = new JSONObject();
-            cntReport.put(Specs.REPORT_WIFI_ENABLED, wifiEnabled);
-            cntReport.put(Specs.REPORT_WIFI_STRENGTH, wifiStrength);
-            cntReport.put(Specs.REPORT_WIFI_BSSID, BSSID);
-            cntReport.put(Specs.REPORT_WIFI_BSSID, SSID);
-            cntReport.put(Specs.REPORT_CELL_NETWORK, cellNetwork);
+            cntReport.put(Specifications.REPORT_WIFI_ENABLED, wifiEnabled);
+            cntReport.put(Specifications.REPORT_WIFI_STRENGTH, wifiStrength);
+            cntReport.put(Specifications.REPORT_WIFI_BSSID, BSSID);
+            cntReport.put(Specifications.REPORT_WIFI_BSSID, SSID);
+            cntReport.put(Specifications.REPORT_CELL_NETWORK, cellNetwork);
             return cntReport;
         } catch (Exception e) {
             e.printStackTrace();

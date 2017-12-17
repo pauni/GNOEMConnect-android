@@ -155,9 +155,6 @@ public class AddComputerActivity extends AppCompatActivity {
 
 
 
-
-
-
     /*
      *       SEARCH, SHOW, CONNECT, SAVE COMPUTERS
      */

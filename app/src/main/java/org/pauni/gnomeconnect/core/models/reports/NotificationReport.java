@@ -13,7 +13,7 @@ import android.util.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
-import org.pauni.gnomeconnect.core.models.Specs;
+import org.pauni.gnomeconnect.core.interfaces.Specifications;
 
 import java.io.ByteArrayOutputStream;
 
@@ -22,7 +22,7 @@ import java.io.ByteArrayOutputStream;
  */
 
 public class NotificationReport implements GCPackageData {
-    private static final String TYPE = Specs.TYPE_NOTIFICATION_REPORT;
+    private static final String TYPE = Specifications.TYPE_NOTIFICATION_REPORT;
 
     private StatusBarNotification sbn;
     private Context context;

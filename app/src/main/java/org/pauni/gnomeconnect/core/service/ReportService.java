@@ -13,7 +13,7 @@ import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 
-import org.pauni.gnomeconnect.BatteryWatcher;
+import org.pauni.gnomeconnect.core.utils.BatteryWatcher;
 import org.pauni.gnomeconnect.core.models.reports.MiscReport;
 import org.pauni.gnomeconnect.core.models.PhoneStatus;
 import org.pauni.gnomeconnect.core.models.reports.NotificationReport;

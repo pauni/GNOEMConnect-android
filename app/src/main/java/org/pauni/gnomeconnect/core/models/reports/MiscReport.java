@@ -3,7 +3,7 @@ package org.pauni.gnomeconnect.core.models.reports;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
-import org.pauni.gnomeconnect.core.models.Specs;
+import org.pauni.gnomeconnect.core.interfaces.Specifications;
 
 /**
  *      Reports consists of their static attributes, that are updated
@@ -16,7 +16,7 @@ import org.pauni.gnomeconnect.core.models.Specs;
 
 
 public class MiscReport implements GCPackageData {
-    private static final String TYPE = Specs.TYPE_MISC_REPORT;
+    private static final String TYPE = Specifications.TYPE_MISC_REPORT;
 
     private static String  airplaneMode     = null;
     private static String  headsetName      = null;
@@ -104,12 +104,12 @@ public class MiscReport implements GCPackageData {
 
         try {
             JSONObject miscReport = new JSONObject();
-            miscReport.put(Specs.AIRPLANE_MODE,      airplaneMode);
-            miscReport.put(Specs.HEADSET_PLUGGED_IN, headsetIsPluggedIn);
-            miscReport.put(Specs.HEADSET_HAS_MIC,    headsetHasMic);
-            miscReport.put(Specs.HEADSET_NAME,       headsetName);
-            miscReport.put(Specs.PHONE_UNLOCKED,     phoneUnlocked);
-            miscReport.put(Specs.SCREEN_ON,          screenOn);
+            miscReport.put(Specifications.AIRPLANE_MODE,      airplaneMode);
+            miscReport.put(Specifications.HEADSET_PLUGGED_IN, headsetIsPluggedIn);
+            miscReport.put(Specifications.HEADSET_HAS_MIC,    headsetHasMic);
+            miscReport.put(Specifications.HEADSET_NAME,       headsetName);
+            miscReport.put(Specifications.PHONE_UNLOCKED,     phoneUnlocked);
+            miscReport.put(Specifications.SCREEN_ON,          screenOn);
 
             return miscReport;
         } catch (JSONException e) {

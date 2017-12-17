@@ -38,15 +38,15 @@ public class GCClient {
         return client.isBound();
     }
 
-    public boolean send(final GCPackage GCPackage) {
+    public boolean send(final GCPackage gcPackage) {
         /*
          * Sends packets. Go to models.GCPackage for more details
          */
 
         try {
             out = new PrintWriter(client.getOutputStream(), true);
-            out.println(GCPackage.toJsonString());
-            Log.i("GCClient", "send=" + GCPackage.toJsonString());
+            out.println(gcPackage.toJsonString());
+            Log.i("GCClient", "send=" + gcPackage.toJsonString());
             return true;
         } catch (Exception e) {
             e.printStackTrace();

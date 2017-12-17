@@ -1,4 +1,4 @@
-package org.pauni.gnomeconnect;
+package org.pauni.gnomeconnect.core.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 
-import org.pauni.gnomeconnect.core.models.Specs;
+import org.pauni.gnomeconnect.core.interfaces.Specifications;
 
 /**
  *      The BatteryWatcher replaces the Broadcasts from the BatteryManager.
@@ -76,15 +76,15 @@ public class BatteryWatcher {
 
         switch (state) {
             case 0:
-                return Specs.BATTERY_NOT_CHARGING;
+                return Specifications.BATTERY_NOT_CHARGING;
             case BatteryManager.BATTERY_PLUGGED_AC:
-                return Specs.BATTERY_CHARGING_AC;
+                return Specifications.BATTERY_CHARGING_AC;
             case BatteryManager.BATTERY_PLUGGED_USB:
-                return Specs.BATTERY_CHARGING_USB;
+                return Specifications.BATTERY_CHARGING_USB;
             case BatteryManager.BATTERY_PLUGGED_WIRELESS:
-                return Specs.BATTERY_CHARGING_WIRELESS;
+                return Specifications.BATTERY_CHARGING_WIRELESS;
             default:
-                return Specs.BATTERY_NOT_CHARGING;
+                return Specifications.BATTERY_NOT_CHARGING;
         }
     }
 

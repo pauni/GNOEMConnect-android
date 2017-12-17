@@ -3,9 +3,9 @@ package org.pauni.gnomeconnect.core.models.reports;
 import android.content.Intent;
 
 import org.json.JSONObject;
-import org.pauni.gnomeconnect.BatteryWatcher;
+import org.pauni.gnomeconnect.core.utils.BatteryWatcher;
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
-import org.pauni.gnomeconnect.core.models.Specs;
+import org.pauni.gnomeconnect.core.interfaces.Specifications;
 
 /**
  *      Reports have static attributes, that are updated
@@ -13,8 +13,8 @@ import org.pauni.gnomeconnect.core.models.Specs;
  *
  */
 
-public class PowerReport implements GCPackageData {
-    private static final String TYPE = Specs.TYPE_POWER_REPORT;
+public class PowerReport implements GCPackageData, Specifications {
+    private static final String TYPE = Specifications.TYPE_POWER_REPORT;
 
     private int level;
     private int temperature;
@@ -37,9 +37,9 @@ public class PowerReport implements GCPackageData {
     public JSONObject toJsonObject() {
         try {
             JSONObject powerReport = new JSONObject();
-            powerReport.put(Specs.PowerReport.REPORT_BATTERY_LEVEL, level);
-            powerReport.put(Specs.PowerReport.REPORT_BATTERY_CHARGING, charging);
-            powerReport.put(Specs.PowerReport.REPORT_BATTERY_TEMPERATURE, temperature);
+            powerReport.put(Report.REPORT_BATTERY_LEVEL, level);
+            powerReport.put(Report.REPORT_BATTERY_CHARGING, charging);
+            powerReport.put(Report.REPORT_BATTERY_TEMPERATURE, temperature);
             return powerReport;
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.pauni.gnomeconnect.core.interfaces.Specifications;
 import org.pauni.gnomeconnect.core.models.Packet.GCPackage;
 import org.pauni.gnomeconnect.core.network.GCClient;
 
@@ -42,7 +43,7 @@ public class ConnectedComputer extends Computer {
     @JsonIgnore
     public boolean isReachable() {
         try {
-            Socket client = new Socket(this.getIpAddress(), Specs.NETWORK_PORT);
+            Socket client = new Socket(this.getIpAddress(), Specifications.NETWORK_PORT);
             client.close();
             return true;
         } catch (Exception e) {

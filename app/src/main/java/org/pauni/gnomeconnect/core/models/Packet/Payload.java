@@ -2,7 +2,7 @@ package org.pauni.gnomeconnect.core.models.Packet;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.pauni.gnomeconnect.core.models.Specs;
+import org.pauni.gnomeconnect.core.interfaces.Specifications;
 
 /**
  * Created by roni on 17.12.17.
@@ -15,8 +15,8 @@ public class Payload {
     public Payload() {}
 
     public Payload(JSONObject payload) throws JSONException {
-        this.data = payload.getJSONObject(Specs.Payload.DATA);
-        this.type = payload.getString(Specs.Payload.TYPE);
+        this.data = payload.getJSONObject(Specifications.Payload.DATA);
+        this.type = payload.getString(Specifications.Payload.TYPE);
     }
 
 

@@ -3,7 +3,7 @@ package org.pauni.gnomeconnect.core.models.reports;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
-import org.pauni.gnomeconnect.core.interfaces.Specifications;
+import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
 /**
  *      Reports consists of their static attributes, that are updated
@@ -15,8 +15,8 @@ import org.pauni.gnomeconnect.core.interfaces.Specifications;
  */
 
 
-public class MiscReport implements GCPackageData {
-    private static final String TYPE = Specifications.TYPE_MISC_REPORT;
+public class MiscReport implements GCPackageData, Protocol {
+    private static final String TYPE = Protocol.TYPE_MISC_REPORT;
 
     private static String  airplaneMode     = null;
     private static String  headsetName      = null;
@@ -52,7 +52,6 @@ public class MiscReport implements GCPackageData {
         phoneUnlocked    = false;
         screenOn         = false;
     }
-
 
 
 
@@ -104,12 +103,12 @@ public class MiscReport implements GCPackageData {
 
         try {
             JSONObject miscReport = new JSONObject();
-            miscReport.put(Specifications.AIRPLANE_MODE,      airplaneMode);
-            miscReport.put(Specifications.HEADSET_PLUGGED_IN, headsetIsPluggedIn);
-            miscReport.put(Specifications.HEADSET_HAS_MIC,    headsetHasMic);
-            miscReport.put(Specifications.HEADSET_NAME,       headsetName);
-            miscReport.put(Specifications.PHONE_UNLOCKED,     phoneUnlocked);
-            miscReport.put(Specifications.SCREEN_ON,          screenOn);
+            miscReport.put(Report.AIRPLANE_MODE,      airplaneMode);
+            miscReport.put(Report.HEADSET_PLUGGED_IN, headsetIsPluggedIn);
+            miscReport.put(Report.HEADSET_HAS_MIC,    headsetHasMic);
+            miscReport.put(Report.HEADSET_NAME,       headsetName);
+            miscReport.put(Report.PHONE_UNLOCKED,     phoneUnlocked);
+            miscReport.put(Report.SCREEN_ON,          screenOn);
 
             return miscReport;
         } catch (JSONException e) {

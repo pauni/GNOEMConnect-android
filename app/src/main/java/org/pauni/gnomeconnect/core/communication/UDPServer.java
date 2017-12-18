@@ -1,4 +1,4 @@
-package org.pauni.gnomeconnect.core.network;
+package org.pauni.gnomeconnect.core.communication;
 
 import android.content.Context;
 import android.net.wifi.WifiManager;

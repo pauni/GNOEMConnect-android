@@ -5,7 +5,7 @@ package org.pauni.gnomeconnect.core.interfaces;
  *      easier to maintain, make changes etc.
  */
 
-public interface Specifications {
+public interface Protocol {
 
 
     /**
@@ -35,28 +35,29 @@ public interface Specifications {
         public static final String OS           = "device_os";
     }
 
-    class PowerReport {
+    class Report {
         // POWER REPORT KEYS
-        public static final String REPORT_BATTERY_LEVEL       = "battery_level";
-        public static final String REPORT_BATTERY_CHARGING    = "battery_charging";
-        public static final String REPORT_BATTERY_TEMPERATURE = "battery_temperature";
+        public static final String BATTERY_LEVEL = "battery_level";
+        public static final String BATTERY_CHARGING = "battery_charging";
+        public static final String BATTERY_TEMPERATURE = "battery_temperature";
+
+        // CONNECTIVITY REPORT KEYS
+        public static final String WIFI_ENABLED = "wifi_enabled";
+        public static final String WIFI_BSSID = "wifi_bssid";
+        public static final String WIFI_STRENGTH = "wifi_strength";
+        public static final String CELL_NETWORK   = "cell network";
+
+
+        // MISC REPORT KEYS
+        public static final String AIRPLANE_MODE        = "airplane_mode";
+        public static final String HEADSET_PLUGGED_IN   = "headset_plugged_in";
+        public static final String HEADSET_HAS_MIC      = "headset_has_mic";
+        public static final String HEADSET_NAME         = "headset_name";
+        public static final String PHONE_UNLOCKED       = "phone_unlocked";
+        public static final String SCREEN_ON            = "screen_on";
     }
 
 
-    // CONNECTIVITY REPORT KEYS
-    String REPORT_WIFI_ENABLED   = "wifi_enabled";
-    String REPORT_WIFI_BSSID     = "wifi_bssid";
-    String REPORT_WIFI_STRENGTH  = "wifi_strength";
-    String REPORT_CELL_NETWORK   = "cell network";
-
-
-    // MISC REPORT KEYS
-    String AIRPLANE_MODE        = "airplane_mode";
-    String HEADSET_PLUGGED_IN   = "headset_plugged_in";
-    String HEADSET_HAS_MIC      = "headset_has_mic";
-    String HEADSET_NAME         = "headset_name";
-    String PHONE_UNLOCKED       = "phone_unlocked";
-    String SCREEN_ON            = "screen_on";
 
 
 

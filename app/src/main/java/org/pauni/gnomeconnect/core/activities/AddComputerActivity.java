@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.pauni.gnomeconnect.R;
 import org.pauni.gnomeconnect.core.adapters.ComputerListAdapter;
 import org.pauni.gnomeconnect.core.models.Computer;
-import org.pauni.gnomeconnect.core.network.GnomeLover;
-import org.pauni.gnomeconnect.core.network.GnomeSpotter;
+import org.pauni.gnomeconnect.core.communication.GnomeLover;
+import org.pauni.gnomeconnect.core.communication.GnomeSpotter;
 
 import java.io.IOException;
 import java.util.ArrayList;

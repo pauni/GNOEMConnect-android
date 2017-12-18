@@ -1,4 +1,4 @@
-package org.pauni.gnomeconnect.core.network;
+package org.pauni.gnomeconnect.core.communication;
 
 import android.app.Activity;
 import android.view.View;

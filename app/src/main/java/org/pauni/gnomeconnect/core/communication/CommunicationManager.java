@@ -1,5 +1,7 @@
-package org.pauni.gnomeconnect.core.network;
+package org.pauni.gnomeconnect.core.communication;
 
+
+import android.util.Log;
 
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
 import org.pauni.gnomeconnect.core.models.Computer;
@@ -28,11 +30,13 @@ public class CommunicationManager {
         updateList();
     }
 
-    public void sendToAll(GCPackageData data) {
+    public static void sendToAll(GCPackageData data) {
+        Log.i("sendToAll", "called()");
         try {
             // Send the report to every connected computer
             for (ConnectedComputer computer : connectedComputers) {
                 GCPackage output = new GCPackage(data);
+                Log.i("sendToAll", output.getData().toString());
                 // TODO: computer.send(output);
             }
         } catch (Exception e) {
@@ -40,11 +44,12 @@ public class CommunicationManager {
         }
     }
 
-    public boolean sendToComputer(Computer computer, GCPackageData data) {
+    public static boolean sendToComputer(Computer computer, GCPackageData data) {
         // TODO: build method.
         return false;
     }
 
+    // Adds newly added computers to the list
     public static void updateList() {
         for (Computer computer : Prefs.getConnectedComputers()) {
             connectedComputers.add((ConnectedComputer) computer);

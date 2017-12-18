@@ -1,4 +1,4 @@
-package org.pauni.gnomeconnect.core.models.reports;
+package org.pauni.gnomeconnect.features.notificationsSync;
 
 import android.app.Notification;
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.util.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
-import org.pauni.gnomeconnect.core.interfaces.Specifications;
+import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
 import java.io.ByteArrayOutputStream;
 
@@ -22,7 +22,7 @@ import java.io.ByteArrayOutputStream;
  */
 
 public class NotificationReport implements GCPackageData {
-    private static final String TYPE = Specifications.TYPE_NOTIFICATION_REPORT;
+    private static final String TYPE = Protocol.TYPE_NOTIFICATION_REPORT;
 
     private StatusBarNotification sbn;
     private Context context;
@@ -123,7 +123,7 @@ public class NotificationReport implements GCPackageData {
         Notification nfc = sbn.getNotification();
         Bundle extras    = nfc.extras;
 
-        String title     = extras.getString(Notification.EXTRA_TITLE);
+        String title     = (String) extras.getCharSequence(Notification.EXTRA_TITLE);
         String text      = ""+extras.getCharSequence(Notification.EXTRA_TEXT);
         String program   = getApplicationName(sbn.getPackageName());
         boolean ongoing  = sbn.isOngoing();

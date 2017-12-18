@@ -1,4 +1,4 @@
-package org.pauni.gnomeconnect.core.network;
+package org.pauni.gnomeconnect.core.communication;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.pauni.gnomeconnect.core.models.Computer;
-import org.pauni.gnomeconnect.core.interfaces.Specifications;
+import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -84,7 +84,7 @@ public class GnomeSpotter {
             @Override
             public void run() {
                 try {
-                    UDPServer server = new UDPServer(Specifications.NETWORK_PORT, context);
+                    UDPServer server = new UDPServer(Protocol.NETWORK_PORT, context);
                     while (!responseListenerThread.isInterrupted()) {
                         String input        = server.receive();         //wait4input
                         Computer computer   = new Computer(input);      //json2comp
@@ -113,7 +113,7 @@ public class GnomeSpotter {
     private void sendDiscoveryBroadcast() {
         try {
             String msg = "Hello someone there?";
-            DatagramPacket packet = new DatagramPacket(msg.getBytes(), msg.length(), getBroadcastAddr(), Specifications.NETWORK_PORT);
+            DatagramPacket packet = new DatagramPacket(msg.getBytes(), msg.length(), getBroadcastAddr(), Protocol.NETWORK_PORT);
             DatagramSocket socket = new DatagramSocket();
             socket.send(packet);
             socket.close();

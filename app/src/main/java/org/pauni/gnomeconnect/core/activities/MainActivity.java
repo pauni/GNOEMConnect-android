@@ -21,6 +21,7 @@ import android.widget.Toast;
 import org.pauni.gnomeconnect.R;
 import org.pauni.gnomeconnect.core.adapters.ComputerListAdapter;
 import org.pauni.gnomeconnect.core.models.Prefs;
+import org.pauni.gnomeconnect.core.service.GCBackgroundService;
 import org.pauni.gnomeconnect.core.service.ReportService;
 
 
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         regListeners();
         setSupportActionBar(toolbar);
 
-        startService(new Intent(this, ReportService.class));
+        startService(new Intent(this, GCBackgroundService.class));
         updateList();
     }
 
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Disabled, to use as a trigger to test code. Sorry",
                 Toast.LENGTH_SHORT).show();
 
-        //startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+
+        startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
     }
 
     @Override

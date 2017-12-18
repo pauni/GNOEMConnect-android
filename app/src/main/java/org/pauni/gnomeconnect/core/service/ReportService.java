@@ -13,12 +13,11 @@ import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 
-import org.pauni.gnomeconnect.core.utils.BatteryWatcher;
+import org.pauni.gnomeconnect.features.batterySync.BatteryChangedListener;
 import org.pauni.gnomeconnect.core.models.reports.MiscReport;
 import org.pauni.gnomeconnect.core.models.PhoneStatus;
-import org.pauni.gnomeconnect.core.models.reports.NotificationReport;
-import org.pauni.gnomeconnect.core.models.reports.PowerReport;
-import org.pauni.gnomeconnect.core.network.CommunicationManager;
+import org.pauni.gnomeconnect.features.notificationsSync.NotificationReport;
+import org.pauni.gnomeconnect.core.communication.CommunicationManager;
 import org.pauni.gnomeconnect.core.utils.Utils;
 
 
@@ -35,7 +34,7 @@ import org.pauni.gnomeconnect.core.utils.Utils;
 public class ReportService extends NotificationListenerService {
     BroadcastReceiver receiver;
     CommunicationManager comMgr;
-    BatteryWatcher batteryWatcher;
+    BatteryChangedListener batteryChangedListener;
     Context context;
 
 
@@ -56,7 +55,6 @@ public class ReportService extends NotificationListenerService {
         IntentFilter filters = new IntentFilter();
         filters.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
         filters.addAction(Intent.ACTION_HEADSET_PLUG);
-        filters.addAction(BatteryWatcher.ACTION_BATTERY_CHANGED_RELEVANT);
         filters.addAction(Intent.ACTION_POWER_CONNECTED);
         filters.addAction(Intent.ACTION_POWER_DISCONNECTED);
         filters.addAction(Intent.ACTION_USER_PRESENT);
@@ -69,8 +67,8 @@ public class ReportService extends NotificationListenerService {
         registerReceiver(receiver, filters);
 
         comMgr = new CommunicationManager();
-        batteryWatcher = new BatteryWatcher();
-        batteryWatcher.start(this);
+        batteryChangedListener = new BatteryChangedListener();
+        batteryChangedListener.start(this);
 
         Log.i("ReportService", "onCreate()");
         super.onCreate();
@@ -105,9 +103,6 @@ public class ReportService extends NotificationListenerService {
                         break;
                     case Intent.ACTION_HEADSET_PLUG:
                         onActionHeadsetPlug(intent);
-                        break;
-                    case BatteryWatcher.ACTION_BATTERY_CHANGED_RELEVANT:
-                        comMgr.sendToAll(new PowerReport(intent));
                         break;
                     case Intent.ACTION_USER_PRESENT:
                         onActionUserPresent(intent);

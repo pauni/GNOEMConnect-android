@@ -3,7 +3,7 @@ package org.pauni.gnomeconnect.core.models;
 
 import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
-import org.pauni.gnomeconnect.core.interfaces.Specifications;
+import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
 /**
  *      When created, a jsonobj is created dynamically with all
@@ -11,7 +11,7 @@ import org.pauni.gnomeconnect.core.interfaces.Specifications;
  */
 
 public class PairRequest implements GCPackageData {
-    private static final String TYPE = Specifications.TYPE_PAIRREQUEST;
+    private static final String TYPE = Protocol.TYPE_PAIRREQUEST;
 
     public  PairRequest() {
     }
@@ -22,11 +22,11 @@ public class PairRequest implements GCPackageData {
     public JSONObject toJsonObject() {
         try {
             JSONObject pairRequest = new JSONObject();
-            pairRequest.put(Specifications.Device.FINGERPRINT,"daumen, rechts");
-            pairRequest.put(Specifications.Device.MODEL,      "model..");
-            pairRequest.put(Specifications.Device.PUBLIC_KEY, "keeey..");
-            pairRequest.put(Specifications.Device.OS,         "iOS 5..");
-            pairRequest.put(Specifications.Device.NAME,       "Pauls iPhone..");
+            pairRequest.put(Protocol.Device.FINGERPRINT,"daumen, rechts");
+            pairRequest.put(Protocol.Device.MODEL,      "model..");
+            pairRequest.put(Protocol.Device.PUBLIC_KEY, "keeey..");
+            pairRequest.put(Protocol.Device.OS,         "iOS 5..");
+            pairRequest.put(Protocol.Device.NAME,       "Pauls iPhone..");
             return pairRequest;
         } catch (Exception e) {
             e.printStackTrace();

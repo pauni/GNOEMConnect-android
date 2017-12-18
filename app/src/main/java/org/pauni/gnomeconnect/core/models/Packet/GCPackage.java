@@ -5,7 +5,7 @@ package org.pauni.gnomeconnect.core.models.Packet;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
-import org.pauni.gnomeconnect.core.interfaces.Specifications;
+import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
 /**
  *      Contains header and payload of packets sent with
@@ -34,27 +34,27 @@ public class GCPackage {
     // Create GCPackage from JSON Object
     public GCPackage(String jsonstring) throws JSONException {
         JSONObject json = new JSONObject(jsonstring);
-        fingerprint = json.getString(Specifications.Packet.FINGERPRINT);
-        version     = json.getString(Specifications.Packet.VERSION);
-        payload     = new Payload(json.getJSONObject(Specifications.Packet.PAYLOAD));
+        fingerprint = json.getString(Protocol.Packet.FINGERPRINT);
+        version     = json.getString(Protocol.Packet.VERSION);
+        payload     = new Payload(json.getJSONObject(Protocol.Packet.PAYLOAD));
     }
 
     // For converting a received JSONObject to a GCPackage object.
     public GCPackage(JSONObject json) throws JSONException {
-        fingerprint = json.getString(Specifications.Packet.FINGERPRINT);
-        version     = json.getString(Specifications.Packet.VERSION);
-        payload     = new Payload(json.getJSONObject(Specifications.Packet.PAYLOAD));
+        fingerprint = json.getString(Protocol.Packet.FINGERPRINT);
+        version     = json.getString(Protocol.Packet.VERSION);
+        payload     = new Payload(json.getJSONObject(Protocol.Packet.PAYLOAD));
     }
 
 
     public String toJsonString() {
         try {
             return new JSONObject()
-                    .put(Specifications.Packet.FINGERPRINT, fingerprint)
-                    .put(Specifications.Packet.VERSION, version)
-                    .put(Specifications.Packet.PAYLOAD, new JSONObject()
-                            .put(Specifications.Payload.TYPE, payload.getType())
-                            .put(Specifications.Payload.DATA, payload.getData())).toString();
+                    .put(Protocol.Packet.FINGERPRINT, fingerprint)
+                    .put(Protocol.Packet.VERSION, version)
+                    .put(Protocol.Packet.PAYLOAD, new JSONObject()
+                            .put(Protocol.Payload.TYPE, payload.getType())
+                            .put(Protocol.Payload.DATA, payload.getData())).toString();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

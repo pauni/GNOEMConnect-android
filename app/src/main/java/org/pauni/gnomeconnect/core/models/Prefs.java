@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.pauni.gnomeconnect.core.network.CommunicationManager;
+import org.pauni.gnomeconnect.core.communication.CommunicationManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;

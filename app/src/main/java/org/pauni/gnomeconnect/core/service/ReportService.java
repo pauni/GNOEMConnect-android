@@ -116,12 +116,7 @@ public class ReportService extends NotificationListenerService {
                     case Intent.ACTION_SCREEN_OFF:
                         onActionScreenOnOfChanged();
                         break;
-                    case WifiManager.WIFI_STATE_CHANGED_ACTION:
-                        onWifiStateChangedAction(intent);
-                        break;
-                    case WifiManager.NETWORK_STATE_CHANGED_ACTION:
-                        onNetworkStateChangedAction(intent);
-                        break;
+
                 }
             }
         };

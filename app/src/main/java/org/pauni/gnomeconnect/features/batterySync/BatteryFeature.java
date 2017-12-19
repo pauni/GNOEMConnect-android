@@ -14,6 +14,7 @@ public class BatteryFeature implements GCFeature {
     private BatteryChangedListener batteryChangedListener = null;
     private Context context;
 
+
     @Override
     public void handle(JSONObject data) {
         // Handle battery updates from gnome desktop
@@ -23,6 +24,9 @@ public class BatteryFeature implements GCFeature {
     public void enable(Context context) {
         this.context = context;
         if (batteryChangedListener != null) {
+            batteryChangedListener.start(context);
+        } else {
+            batteryChangedListener = new BatteryChangedListener();
             batteryChangedListener.start(context);
         }
     }

@@ -23,6 +23,7 @@ import org.pauni.gnomeconnect.core.adapters.ComputerListAdapter;
 import org.pauni.gnomeconnect.core.models.Prefs;
 import org.pauni.gnomeconnect.core.service.GCBackgroundService;
 import org.pauni.gnomeconnect.core.service.ReportService;
+import org.pauni.gnomeconnect.features.impressRemote.ImpressConnector;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -55,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
 
 
-        startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+        startActivity(new Intent(this, ImpressConnector.class));
+        //startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
     }
 
     @Override

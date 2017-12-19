@@ -18,13 +18,11 @@ public class BatteryReport implements GCPackageData, Protocol {
     private String charging;
 
 
-    public BatteryReport(int level, int temperature, String charging) {
+    BatteryReport(int level, int temperature, String charging) {
         this.level       = level;
         this.temperature = temperature;
         this.charging    = charging;
     }
-
-
 
 
     /**

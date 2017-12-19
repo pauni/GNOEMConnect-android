@@ -27,6 +27,19 @@ public class BatteryChangedListener {
 
 
     public BatteryChangedListener() {
+        createReceiver();
+    }
+
+
+    public void start(Context context) {
+        context.registerReceiver(receiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    }
+
+    public void stop(Context context) {
+        context.unregisterReceiver(receiver);
+    }
+
+    private void createReceiver() {
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -51,15 +64,6 @@ public class BatteryChangedListener {
             }
         };
     }
-
-    public void start(Context context) {
-        context.registerReceiver(receiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-    }
-
-    public void stop(Context context) {
-        context.unregisterReceiver(receiver);
-    }
-
 
     private static String getChargingStateString(int state) {
         /*

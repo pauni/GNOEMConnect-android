@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import org.pauni.gnomeconnect.features.batterySync.BatteryFeature;
+import org.pauni.gnomeconnect.features.connectivitySync.ConnectivityFeature;
 import org.pauni.gnomeconnect.features.notificationsSync.NotificationsFeature;
 
 /**
@@ -12,16 +14,32 @@ import org.pauni.gnomeconnect.features.notificationsSync.NotificationsFeature;
  */
 
 public class GCBackgroundService extends Service {
+    NotificationsFeature notificationsFeature;
+    ConnectivityFeature connectivityFeature;
+    BatteryFeature batteryFeature;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        startFeatures();
+
+        initializeFeatures();
+        enableFeatures();
     }
 
-    private void startFeatures() {
-        NotificationsFeature notifyFeature = new NotificationsFeature();
-        notifyFeature.enable(this);
+    private void initializeFeatures() {
+        notificationsFeature = new NotificationsFeature();
+        connectivityFeature = new ConnectivityFeature();
+        batteryFeature = new BatteryFeature();
+    }
+
+    private void enableFeatures() {
+        notificationsFeature.enable(this);
+        batteryFeature.enable(this);
+    }
+
+    private void disableFeatures() {
+        notificationsFeature.disable();
+        batteryFeature.disable();
     }
 
     @Nullable

@@ -133,7 +133,7 @@ public class AddComputerActivity extends AppCompatActivity {
 
                 GnomeLover lover = new GnomeLover(AddComputerActivity.this, view);
                 lover.setLovedOne(selectedComputer);
-                lover.sendPairRequest();
+                lover.startPairing();
 
             }
         });

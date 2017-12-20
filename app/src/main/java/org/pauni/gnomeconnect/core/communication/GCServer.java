@@ -66,7 +66,7 @@ class GCServer {
     }
 
 
-    GCPackage getInput() {
+    GCPackage getInputLine() {
 
         Log.d("GCServer","getInputLine()");
 
@@ -81,7 +81,7 @@ class GCServer {
     }
 
 
-    boolean send (GCPackage GCPackage) {
+    boolean send(GCPackage GCPackage) {
         try {
             out.println(GCPackage.toJsonString());
             return true;

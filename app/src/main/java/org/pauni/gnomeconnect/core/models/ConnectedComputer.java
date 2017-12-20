@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 import org.pauni.gnomeconnect.core.models.Packet.GCPackage;
 import org.pauni.gnomeconnect.core.communication.GCClient;
@@ -32,7 +33,7 @@ public class ConnectedComputer extends Computer {
         setFingerprint(computer.getFingerprint());
         setIpAddress(computer.getIpAddress());
         setModel(computer.getModel());
-        setName(computer.getName());
+        setHostname(computer.getHostname());
         setOs(computer.getOs());
         setPublicKey(computer.getPublicKey());
         setVersion(computer.getVersion());
@@ -53,7 +54,7 @@ public class ConnectedComputer extends Computer {
     }
 
     @JsonIgnore
-    public boolean send(GCPackage GCPackage) {
-        return client.send(GCPackage);
+    public boolean send(GCPackageData data) {
+        return client.send(data);
     }
 }

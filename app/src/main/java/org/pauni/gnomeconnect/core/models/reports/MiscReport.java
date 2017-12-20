@@ -16,7 +16,7 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
 
 public class MiscReport implements GCPackageData, Protocol {
-    private static final String TYPE = Protocol.TYPE_MISC_REPORT;
+    private static final String TYPE = Values.TYPE_MISC_REPORT;
 
     private static String  airplaneMode     = null;
     private static String  headsetName      = null;
@@ -103,12 +103,12 @@ public class MiscReport implements GCPackageData, Protocol {
 
         try {
             JSONObject miscReport = new JSONObject();
-            miscReport.put(Report.AIRPLANE_MODE,      airplaneMode);
-            miscReport.put(Report.HEADSET_PLUGGED_IN, headsetIsPluggedIn);
-            miscReport.put(Report.HEADSET_HAS_MIC,    headsetHasMic);
-            miscReport.put(Report.HEADSET_NAME,       headsetName);
-            miscReport.put(Report.PHONE_UNLOCKED,     phoneUnlocked);
-            miscReport.put(Report.SCREEN_ON,          screenOn);
+            miscReport.put(Keys.Report.AIRPLANE_MODE,      airplaneMode);
+            miscReport.put(Keys.Report.HEADSET_PLUGGED_IN, headsetIsPluggedIn);
+            miscReport.put(Keys.Report.HEADSET_HAS_MIC,    headsetHasMic);
+            miscReport.put(Keys.Report.HEADSET_NAME,       headsetName);
+            miscReport.put(Keys.Report.PHONE_UNLOCKED,     phoneUnlocked);
+            miscReport.put(Keys.Report.SCREEN_ON,          screenOn);
 
             return miscReport;
         } catch (JSONException e) {

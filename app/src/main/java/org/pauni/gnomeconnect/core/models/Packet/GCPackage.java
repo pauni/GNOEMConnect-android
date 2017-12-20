@@ -12,7 +12,7 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
  *      gnome connect
  */
 
-public class GCPackage {
+public class GCPackage implements Protocol {
     private String fingerprint;
     private String version;
     private Payload payload = new Payload();
@@ -20,8 +20,8 @@ public class GCPackage {
 
     public GCPackage() {}
 
-    // For creating a GCPackage that should be sendToAll. The header is generated automatically
     public GCPackage(GCPackageData data) throws JSONException {
+        // Create a GCPackage that should be sendToAll. The header is generated automatically
         fingerprint = "getFingerprint()";
         version = "getVersion()";
 
@@ -30,31 +30,32 @@ public class GCPackage {
 
     }
 
-
-    // Create GCPackage from JSON Object
     public GCPackage(String jsonstring) throws JSONException {
+        // Create GCPackage from JSON Object
+
         JSONObject json = new JSONObject(jsonstring);
-        fingerprint = json.getString(Protocol.Packet.FINGERPRINT);
-        version     = json.getString(Protocol.Packet.VERSION);
-        payload     = new Payload(json.getJSONObject(Protocol.Packet.PAYLOAD));
+        fingerprint = json.getString(Keys.Packet.SRC_FINGERPRINT);
+        version     = json.getString(Keys.Packet.VERSION);
+        payload     = new Payload(json.getJSONObject(Keys.Packet.PAYLOAD));
     }
 
-    // For converting a received JSONObject to a GCPackage object.
     public GCPackage(JSONObject json) throws JSONException {
-        fingerprint = json.getString(Protocol.Packet.FINGERPRINT);
-        version     = json.getString(Protocol.Packet.VERSION);
-        payload     = new Payload(json.getJSONObject(Protocol.Packet.PAYLOAD));
+        // Convert a received JSONObject to a GCPackage object.
+
+        fingerprint = json.getString(Keys.Packet.SRC_FINGERPRINT);
+        version     = json.getString(Keys.Packet.VERSION);
+        payload     = new Payload(json.getJSONObject(Keys.Packet.PAYLOAD));
     }
 
 
     public String toJsonString() {
         try {
             return new JSONObject()
-                    .put(Protocol.Packet.FINGERPRINT, fingerprint)
-                    .put(Protocol.Packet.VERSION, version)
-                    .put(Protocol.Packet.PAYLOAD, new JSONObject()
-                            .put(Protocol.Payload.TYPE, payload.getType())
-                            .put(Protocol.Payload.DATA, payload.getData())).toString();
+                    .put(Keys.Packet.SRC_FINGERPRINT, fingerprint)
+                    .put(Keys.Packet.VERSION, version)
+                    .put(Keys.Packet.PAYLOAD, new JSONObject()
+                            .put(Keys.Payload.TYPE, payload.getType())
+                            .put(Keys.Payload.DATA, payload.getData())).toString();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

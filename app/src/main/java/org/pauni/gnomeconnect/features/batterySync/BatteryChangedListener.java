@@ -18,7 +18,7 @@ import org.pauni.gnomeconnect.core.communication.CommunicationManager;
  *      It's initialized, started/stopped by the ReportService
  */
 
-public class BatteryChangedListener {
+public class BatteryChangedListener implements Protocol {
     private int lvl  = 0;       // These are the values we care about
     private int tmp  = 0;       // These are the values we care about
     private String chrg = "";   // These are the values we care about
@@ -72,15 +72,15 @@ public class BatteryChangedListener {
 
         switch (state) {
             case 0:
-                return Protocol.BATTERY_NOT_CHARGING;
+                return Values.BATTERY_NOT_CHARGING;
             case BatteryManager.BATTERY_PLUGGED_AC:
-                return Protocol.BATTERY_CHARGING_AC;
+                return Values.BATTERY_CHARGING_AC;
             case BatteryManager.BATTERY_PLUGGED_USB:
-                return Protocol.BATTERY_CHARGING_USB;
+                return Values.BATTERY_CHARGING_USB;
             case BatteryManager.BATTERY_PLUGGED_WIRELESS:
-                return Protocol.BATTERY_CHARGING_WIRELESS;
+                return Values.BATTERY_CHARGING_WIRELESS;
             default:
-                return Protocol.BATTERY_NOT_CHARGING;
+                return Values.BATTERY_NOT_CHARGING;
         }
     }
 

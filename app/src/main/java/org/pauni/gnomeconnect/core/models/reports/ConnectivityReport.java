@@ -14,7 +14,7 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
  */
 
 public class ConnectivityReport implements GCPackageData, Protocol {
-    private static final String TYPE = TYPE_CONNECTIVITY_REPORT;
+    private static final String TYPE = Values.Payload.TYPE_USERDATA;
 
 
     private static String wifiEnabled   = null;
@@ -54,11 +54,11 @@ public class ConnectivityReport implements GCPackageData, Protocol {
     public JSONObject toJsonObject() {
         try {
             JSONObject cntReport = new JSONObject();
-            cntReport.put(Report.WIFI_ENABLED, wifiEnabled);
-            cntReport.put(Report.WIFI_STRENGTH, wifiStrength);
-            cntReport.put(Report.WIFI_BSSID, BSSID);
-            cntReport.put(Report.WIFI_BSSID, SSID);
-            cntReport.put(Report.CELL_NETWORK, cellNetwork);
+            cntReport.put(Keys.Report.WIFI_ENABLED, wifiEnabled);
+            cntReport.put(Keys.Report.WIFI_STRENGTH, wifiStrength);
+            cntReport.put(Keys.Report.WIFI_BSSID, BSSID);
+            cntReport.put(Keys.Report.WIFI_BSSID, SSID);
+            cntReport.put(Keys.Report.CELL_NETWORK, cellNetwork);
             return cntReport;
         } catch (Exception e) {
             e.printStackTrace();

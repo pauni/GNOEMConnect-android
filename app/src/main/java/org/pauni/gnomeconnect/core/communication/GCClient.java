@@ -2,6 +2,7 @@ package org.pauni.gnomeconnect.core.communication;
 
 import android.util.Log;
 
+import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
 import org.pauni.gnomeconnect.core.models.Packet.GCPackage;
 
 import java.io.BufferedReader;
@@ -38,15 +39,21 @@ public class GCClient {
         return client.isBound();
     }
 
-    public boolean send(final GCPackage gcPackage) {
+    public boolean send(final GCPackageData data) {
         /*
          * Sends packets. Go to models.GCPackage for more details
          */
 
+
         try {
+            GCPackage gcPackage = new GCPackage(data);
+
             out = new PrintWriter(client.getOutputStream(), true);
+
             out.println(gcPackage.toJsonString());
+
             Log.i("GCClient", "send=" + gcPackage.toJsonString());
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,7 +74,7 @@ public class GCClient {
                 @Override
                 public GCPackage call() throws Exception {
                     String input = in.readLine();
-                    Log.i("GCClient", "getInput="+input);
+                    Log.i("GCClient", "getInputLine="+input);
                     return new GCPackage(input);
                 }
             });

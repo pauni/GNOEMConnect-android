@@ -11,7 +11,7 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
  */
 
 public class BatteryReport implements GCPackageData, Protocol {
-    private static final String TYPE = Protocol.TYPE_POWER_REPORT;
+    private static final String TYPE = Values.Payload.TYPE_USERDATA;
 
     private int level;
     private int temperature;
@@ -32,9 +32,9 @@ public class BatteryReport implements GCPackageData, Protocol {
     public JSONObject toJsonObject() {
         try {
             JSONObject powerReport = new JSONObject();
-            powerReport.put(Report.BATTERY_LEVEL, level);
-            powerReport.put(Report.BATTERY_CHARGING, charging);
-            powerReport.put(Report.BATTERY_TEMPERATURE, temperature);
+            powerReport.put(Keys.Report.BATTERY_LEVEL, level);
+            powerReport.put(Keys.Report.BATTERY_CHARGING, charging);
+            powerReport.put(Keys.Report.BATTERY_TEMPERATURE, temperature);
             return powerReport;
         } catch (Exception e) {
             e.printStackTrace();

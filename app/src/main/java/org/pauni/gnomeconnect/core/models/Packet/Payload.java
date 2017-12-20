@@ -8,15 +8,15 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
  * Created by roni on 17.12.17.
  */
 
-public class Payload {
+public class Payload implements Protocol {
     private JSONObject data = null;
     private String type = null;
 
     public Payload() {}
 
     public Payload(JSONObject payload) throws JSONException {
-        this.data = payload.getJSONObject(Protocol.Payload.DATA);
-        this.type = payload.getString(Protocol.Payload.TYPE);
+        this.data = payload.getJSONObject(Keys.Payload.DATA);
+        this.type = payload.getString(Keys.Payload.TYPE);
     }
 
 

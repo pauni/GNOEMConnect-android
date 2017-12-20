@@ -18,11 +18,11 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by roni on 25.11.17.
+ *  Contains notification data
  */
 
-public class NotificationReport implements GCPackageData {
-    private static final String TYPE = Protocol.TYPE_NOTIFICATION_REPORT;
+public class NotificationReport implements GCPackageData, Protocol {
+    private static final String TYPE = Values.Payload.TYPE_USERDATA;
 
     private StatusBarNotification sbn;
     private Context context;

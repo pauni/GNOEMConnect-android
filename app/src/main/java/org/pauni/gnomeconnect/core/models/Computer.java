@@ -16,12 +16,12 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
  *      kinda as a data model.
  */
 
-public class Computer {
+public class Computer implements Protocol {
     private String publicKey   = null;
     private String fingerprint = null;
     private String ipAddress   = null;
+    private String hostname    = null;
     private String model       = null;
-    private String name        = null;
     private String os          = null;
     private String version     = null;
 
@@ -37,32 +37,35 @@ public class Computer {
     }
 
     public Computer(JSONObject json) {
-        String info = "No errors";   // Short info if failed,  instead of huge stacktraces
+        String info = "";   // Short info if failed,  instead of huge stacktraces
 
         // Json obj don't necessarily have all fields. So each is checked individually
-        try { // device name
-            this.name        = json.getString(Protocol.Device.NAME);
-        } catch (JSONException e) { info = "field "+ Protocol.Device.NAME + " not found"; }
+
+
 
         try { // fingerprint
-            this.fingerprint = json.getString(Protocol.Packet.FINGERPRINT);
-        } catch (JSONException e) {info += "field "+ Protocol.Packet.FINGERPRINT + " not found";}
+            this.fingerprint = json.getString(Keys.Packet.SRC_FINGERPRINT);
+        } catch (JSONException e) {info += "field "+ Keys.Packet.SRC_FINGERPRINT + " not found";}
 
         try { // version
-            this.version     = json.getString(Protocol.Packet.VERSION);
-        } catch (JSONException e) {info += "field "+ Protocol.Packet.VERSION + " not found";}
+            this.version     = json.getString(Keys.Packet.VERSION);
+        } catch (JSONException e) {info += "field "+ Keys.Packet.VERSION + " not found";}
 
         try { // os
-            this.os          = json.getString(Protocol.Device.OS);
-        } catch (JSONException e) {info += "field "+ Protocol.Device.OS + " not found";}
+            this.os          = json.getString(Keys.Device.OS);
+        } catch (JSONException e) {info += "field "+ Keys.Device.OS + " not found";}
+
+        try { // hostname
+            this.hostname = json.getString(Keys.Device.HOSTNAME);
+        } catch (JSONException e) {info += "field "+ Keys.Device.HOSTNAME + " not found";}
 
         try { // model
-            this.model       = json.getString(Protocol.Device.MODEL);
-        } catch (JSONException e) {info += "field "+ Protocol.Device.MODEL + " not found";}
+            this.model       = json.getString(Keys.Device.MODEL);
+        } catch (JSONException e) {info += "field "+ Keys.Device.MODEL + " not found";}
 
         try { // public key
-            this.publicKey   = json.getString(Protocol.Device.PUBLIC_KEY);
-        } catch (JSONException e) {info += "field "+ Protocol.Device.PUBLIC_KEY + " not found";}
+            this.publicKey   = json.getString(Keys.Device.PUBLIC_KEY);
+        } catch (JSONException e) {info += "field "+ Keys.Device.PUBLIC_KEY + " not found";}
 
         Log.i("Computer", "Constructor from Json Errors: " + info);
 
@@ -91,8 +94,8 @@ public class Computer {
         return model;
     }
 
-    public String getName() {
-        return name;
+    public String getHostname() {
+        return hostname;
     }
 
     public String getOs() {
@@ -110,7 +113,7 @@ public class Computer {
                 && fingerprint != null
                 && ipAddress   != null
                 && model       != null
-                && name        != null
+                && hostname    != null
                 && os          != null
                 && version     != null;
     }
@@ -137,8 +140,8 @@ public class Computer {
         this.model = model;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
     }
 
     public void setOs(String os) {

@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import org.pauni.gnomeconnect.R;
 
@@ -28,7 +27,7 @@ public class ImpressRemote extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.impress_remoute);
+        setContentView(R.layout.impress_remote);
 
         new Thread(new Runnable() {
             @Override

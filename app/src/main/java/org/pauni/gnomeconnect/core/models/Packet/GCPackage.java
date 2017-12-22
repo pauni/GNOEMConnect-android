@@ -13,7 +13,8 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
  */
 
 public class GCPackage implements Protocol {
-    private String fingerprint;
+    private String src_fingerprint;
+    private String dst_fingerprint;
     private String version;
     private Payload payload = new Payload();
 
@@ -22,7 +23,8 @@ public class GCPackage implements Protocol {
 
     public GCPackage(GCPackageData data) throws JSONException {
         // Create a GCPackage that should be sendToAll. The header is generated automatically
-        fingerprint = "getFingerprint()";
+        src_fingerprint = "getSrcFingerprint()";
+        dst_fingerprint = "getSrcFingerprint()";
         version = "getVersion()";
 
         payload.setType(data.getType());
@@ -34,7 +36,7 @@ public class GCPackage implements Protocol {
         // Create GCPackage from JSON Object
 
         JSONObject json = new JSONObject(jsonstring);
-        fingerprint = json.getString(Keys.Packet.SRC_FINGERPRINT);
+        src_fingerprint = json.getString(Keys.Packet.SRC_FINGERPRINT);
         version     = json.getString(Keys.Packet.VERSION);
         payload     = new Payload(json.getJSONObject(Keys.Packet.PAYLOAD));
     }
@@ -42,7 +44,7 @@ public class GCPackage implements Protocol {
     public GCPackage(JSONObject json) throws JSONException {
         // Convert a received JSONObject to a GCPackage object.
 
-        fingerprint = json.getString(Keys.Packet.SRC_FINGERPRINT);
+        src_fingerprint = json.getString(Keys.Packet.SRC_FINGERPRINT);
         version     = json.getString(Keys.Packet.VERSION);
         payload     = new Payload(json.getJSONObject(Keys.Packet.PAYLOAD));
     }
@@ -51,7 +53,8 @@ public class GCPackage implements Protocol {
     public String toJsonString() {
         try {
             return new JSONObject()
-                    .put(Keys.Packet.SRC_FINGERPRINT, fingerprint)
+                    .put(Keys.Packet.SRC_FINGERPRINT, src_fingerprint)
+                    .put(Keys.Packet.DST_FINGERPRINT, dst_fingerprint)
                     .put(Keys.Packet.VERSION, version)
                     .put(Keys.Packet.PAYLOAD, new JSONObject()
                             .put(Keys.Payload.TYPE, payload.getType())
@@ -67,21 +70,27 @@ public class GCPackage implements Protocol {
     /**
      *      GETTERS
      */
-    public String getFingerprint() {
-        return fingerprint;
+
+
+    public String getSrc_fingerprint() {
+        return src_fingerprint;
     }
 
+    public String getDst_fingerprint() {
+        return dst_fingerprint;
+    }
 
     public String getVersion() {
         return version;
-    }
-
-    public Payload getPayload() {
-        return payload;
     }
 
     public JSONObject getData() {
         return payload.getData();
 
     }
+
+    public String getDataType() {
+        return payload.getType();
+    }
 }
+

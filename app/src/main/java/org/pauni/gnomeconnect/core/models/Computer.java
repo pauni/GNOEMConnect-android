@@ -9,6 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
+import javax.crypto.SecretKey;
+
 
 /**
  *      This represents a connected computer with GNOME Connect Desktop.
@@ -17,7 +19,7 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
  */
 
 public class Computer implements Protocol {
-    private String publicKey   = null;
+    private String sharedSecret = null;
     private String fingerprint = null;
     private String ipAddress   = null;
     private String hostname    = null;
@@ -44,8 +46,8 @@ public class Computer implements Protocol {
 
 
         try { // fingerprint
-            this.fingerprint = json.getString(Keys.Packet.SRC_FINGERPRINT);
-        } catch (JSONException e) {info += "field "+ Keys.Packet.SRC_FINGERPRINT + " not found";}
+            this.fingerprint = json.getString(Keys.Device.FINGERPRINT);
+        } catch (JSONException e) {info += "field "+ Keys.Device.FINGERPRINT + " not found";}
 
         try { // version
             this.version     = json.getString(Keys.Packet.VERSION);
@@ -63,8 +65,8 @@ public class Computer implements Protocol {
             this.model       = json.getString(Keys.Device.MODEL);
         } catch (JSONException e) {info += "field "+ Keys.Device.MODEL + " not found";}
 
-        try { // public key
-            this.publicKey   = json.getString(Keys.Device.PUBLIC_KEY);
+        try { // shared secret
+            this.sharedSecret = json.getString(Keys.Device.PUBLIC_KEY);
         } catch (JSONException e) {info += "field "+ Keys.Device.PUBLIC_KEY + " not found";}
 
         Log.i("Computer", "Constructor from Json Errors: " + info);
@@ -78,8 +80,8 @@ public class Computer implements Protocol {
     /*
      *      GETTER
      */
-    public String getPublicKey() {
-        return publicKey;
+    public String getSharedSecret() {
+        return sharedSecret;
     }
 
     public String getFingerprint() {
@@ -109,7 +111,9 @@ public class Computer implements Protocol {
 
     @JsonIgnore
     public boolean isComplete() {
-        return publicKey != null
+        Log.i("Computer", "fingerprint=" + fingerprint + " ip="+ipAddress+" model="+model+" name="+hostname+" os="+os+" version="+version);
+
+        return sharedSecret != null
                 && fingerprint != null
                 && ipAddress   != null
                 && model       != null
@@ -124,8 +128,8 @@ public class Computer implements Protocol {
     /*
      *      SETTER
      */
-    public void setPublicKey(String publicKey) {
-        this.publicKey = publicKey;
+    public void setSharedSecret(String sharedSecret) {
+        this.sharedSecret = sharedSecret;
     }
 
     public void setFingerprint(String fingerprint) {

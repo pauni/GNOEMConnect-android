@@ -17,8 +17,8 @@ public interface Protocol {
         public class Packet {
             public static final String SRC_FINGERPRINT = "src_fingerprint";
             public static final String DST_FINGERPRINT = "dst_fingerprint";
-            public static final String VERSION     = "version";
-            public static final String PAYLOAD     = "payload";
+            public static final String VERSION         = "version";
+            public static final String PAYLOAD         = "payload";
         }
 
         public class Payload {
@@ -27,8 +27,8 @@ public interface Protocol {
         }
 
         public class Pairing {
-            public static final String ACTION = "action";
-            public static final String DEVICE = "device";
+            public static final String STEP = "step";
+            public static final String DATA = "data";
         }
 
         public class Device {
@@ -61,9 +61,6 @@ public interface Protocol {
     }
 
 
-
-
-
     /**
      *      JSON VALUES. VALUES OF CERTAIN FIELDS USED IN GNOME CONNECT
      */
@@ -79,9 +76,14 @@ public interface Protocol {
         }
 
         public class Pairing {
-            public static final String ACTION_REQUEST   = "request";
-            public static final String ACTION_DENIED    = "denied";
-            public static final String ACTION_ACCCEPTED = "accepted";
+            public static final int STEP_1 = 1;
+            public static final int STEP_2 = 2;
+            public static final int STEP_3 = 3;
+            public static final int STEP_4 = 4;
+            public static final int STEP_5 = 5;
+            public static final int STEP_6 = 6;
+            public static final int STEP_7 = 7;
+            public static final int STEP_8 = 8;
         }
 
         // PAYLOAD TYPE VALUES

@@ -2,6 +2,7 @@ package org.pauni.gnomeconnect.core.utils;
 
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.PowerManager;
 
 import java.math.BigInteger;
@@ -28,6 +29,9 @@ public class Utils {
     */
 
 
+    public static String getModelName() {
+        return Build.MANUFACTURER + " " + Build.PRODUCT;
+    }
     // returns true, if phone is ready for user-interactions
     public static boolean isScreenOn(Context context) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);

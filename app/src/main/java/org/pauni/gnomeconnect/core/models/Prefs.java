@@ -8,9 +8,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.pauni.gnomeconnect.core.communication.CommunicationManager;
 
+import java.io.PrintWriter;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.crypto.spec.SecretKeySpec;
 
 
 /**
@@ -74,7 +83,7 @@ public class Prefs {
 
 
     /*
-    *   Save and get Computers
+    *   Save and get GNOME Connect Desktops
     */
     public static boolean saveComputerConnection(ConnectedComputer connectedComputer) {
         try {

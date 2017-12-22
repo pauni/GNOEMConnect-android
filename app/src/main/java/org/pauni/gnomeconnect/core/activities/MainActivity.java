@@ -6,11 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +22,8 @@ import android.widget.Toast;
 
 import org.pauni.gnomeconnect.R;
 import org.pauni.gnomeconnect.core.adapters.ComputerListAdapter;
+import org.pauni.gnomeconnect.core.encryption.Encryption;
+import org.pauni.gnomeconnect.core.interfaces.GCFeature;
 import org.pauni.gnomeconnect.core.models.Prefs;
 import org.pauni.gnomeconnect.core.service.GCBackgroundService;
 import org.pauni.gnomeconnect.core.service.ReportService;
@@ -55,9 +59,13 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Disabled, to use as a trigger to test code. Sorry",
                 Toast.LENGTH_SHORT).show();
 
+        String text = "hi this is a test msg";
+        String textEncrypted = Encryption.getSymCipher().encrypt(text, null);
+        String textDecrypted = Encryption.getSymCipher().decrypt(textEncrypted, null);
+        Log.i("OnBackPressed()", "original="+text + "\ndecrypted="+textDecrypted+"\nencrypted="+textEncrypted);
 
-        startActivity(new Intent(this, ImpressConnector.class));
-        //startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+        //startActivity(new Intent(this, ImpressConnector.class));
+        //startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
     }
 
     @Override
@@ -133,7 +141,9 @@ public class MainActivity extends AppCompatActivity {
         mNotificationManager.notify(1, mBuilder.build());
     }
 
-
+    public static void addFeatureToList(GCFeature feature) {
+        
+    }
 
 
 

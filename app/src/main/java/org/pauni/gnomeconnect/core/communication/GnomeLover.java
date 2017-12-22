@@ -6,12 +6,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import org.json.JSONObject;
 import org.pauni.gnomeconnect.R;
+import org.pauni.gnomeconnect.core.encryption.Encryption;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 import org.pauni.gnomeconnect.core.models.Computer;
 import org.pauni.gnomeconnect.core.models.ConnectedComputer;
-import org.pauni.gnomeconnect.core.models.Packet.GCPackage;
 import org.pauni.gnomeconnect.core.models.Pairing;
 import org.pauni.gnomeconnect.core.models.Prefs;
 
@@ -65,11 +64,58 @@ public class GnomeLover implements Protocol {
             @Override
             public void run() {
                 try {
+                    Computer computer = new Computer();
+
                     GCClient client = new GCClient(lovedOne.getIpAddress());
 
-                    client.send(Pairing.getRequestPacket()); // send request
+                    client.send(Pairing.Step1()); // send request
 
-                    handlePairResponse(client.getInput());
+                    int step = client.getInput().getData().getInt(Keys.Pairing.STEP);
+
+                    if (step == Values.Pairing.STEP_1) {
+                        String publicKey = client.getInput().getData().getString(Keys.Pairing.DATA);
+
+                        client.send(Pairing.Step2());
+
+                        step = client.getInput().getData().getInt(Keys.Pairing.STEP);
+                    }
+
+                    if (step == Values.Pairing.STEP_2) {
+                        String publicKey = client.getInput().getData().getString(Keys.Pairing.DATA);
+
+                        client.send(Pairing.Step3());
+
+                        step = client.getInput().getData().getInt(Keys.Pairing.STEP);
+                    }
+
+                    if (step == Values.Pairing.STEP_3) {
+                        // ask user if he wants to connect...
+
+                        //client.send(Pairing.Step4());
+
+                    }
+
+                    String sharedSecretHalf1 = "random";
+                    if (step == Values.Pairing.STEP_4) {
+                        boolean accepted = client.getInput().getData().getBoolean(Keys.Pairing.DATA);
+
+                        if (accepted) {
+                            client.send(Pairing.Step5(sharedSecretHalf1));
+                        } else {
+                            return;
+                        }
+
+                        step = client.getInput().getData().getInt(Keys.Pairing.STEP);
+                    }
+
+                    if (step == Values.Pairing.STEP_5) {
+                        String sharedSecretHalf2 = client.getInput().getData().getString(Keys.Pairing.DATA);
+                        client.send(Pairing.Step6(sharedSecretHalf2));
+                        Encryption.createSharedSecret(sharedSecretHalf1+sharedSecretHalf2);
+                    }
+
+
+
 
                     client.close();
                 } catch (Exception e) {
@@ -79,43 +125,6 @@ public class GnomeLover implements Protocol {
             }
         }).start();
 
-    }
-
-    private void handlePairResponse(GCPackage gcPackage) {
-        if (gcPackage == null) {
-            setState(STATE_FAILED, null);
-            return;
-        }
-
-        try {
-            String action = gcPackage.getData().getString(Keys.Pairing.ACTION);
-
-            switch (action) {
-                case Values.Pairing.ACTION_ACCCEPTED:
-                    JSONObject device = gcPackage.getData().getJSONObject(Keys.Pairing.DEVICE);
-
-                    Computer computer = new Computer(device);
-                    computer.setVersion(gcPackage.getVersion());
-                    computer.setIpAddress(lovedOne.getIpAddress());
-
-                    if (saveComputer(computer)) {
-                        setState(STATE_CONNECTED, null);
-                    } else
-                        setState(STATE_FAILED, "Can't save");
-
-                    break;
-                case Values.Pairing.ACTION_DENIED:
-                    setState(STATE_FAILED, "denied");
-                    break;
-                default:
-                    setState(STATE_FAILED, "unknown");
-                    break;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            setState(STATE_FAILED, null);
-        }
     }
 
     private boolean saveComputer(Computer computer) {

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
-import org.pauni.gnomeconnect.core.models.Packet.GCPackage;
 import org.pauni.gnomeconnect.core.communication.GCClient;
 
 import java.net.Socket;
@@ -35,7 +34,7 @@ public class ConnectedComputer extends Computer {
         setModel(computer.getModel());
         setHostname(computer.getHostname());
         setOs(computer.getOs());
-        setPublicKey(computer.getPublicKey());
+        setSharedSecret(computer.getSharedSecret());
         setVersion(computer.getVersion());
 
         client = new GCClient(getIpAddress());

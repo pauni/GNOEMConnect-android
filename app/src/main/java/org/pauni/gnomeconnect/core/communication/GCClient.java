@@ -3,6 +3,7 @@ package org.pauni.gnomeconnect.core.communication;
 import android.util.Log;
 
 import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
+import org.pauni.gnomeconnect.core.interfaces.Protocol;
 import org.pauni.gnomeconnect.core.models.Packet.GCPackage;
 
 import java.io.BufferedReader;
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeoutException;
  */
 
 
-public class GCClient {
+public class GCClient implements Protocol {
 
     private Socket          client;
     private PrintWriter     out;
@@ -75,7 +76,21 @@ public class GCClient {
                 public GCPackage call() throws Exception {
                     String input = in.readLine();
                     Log.i("GCClient", "getInputLine="+input);
-                    return new GCPackage(input);
+
+                    GCPackage packet = new GCPackage(input);
+                    String dataType = packet.getDataType();
+
+                    if (dataType.equals(Values.Payload.TYPE_USERDATA)) {
+                        // userdata is ALWAYS encrypted symmetrically
+                        // with the key from the sharedSecret
+                        ich muss hier irgendwie die Daten entschlüsseln ohne eine setData methode aufzurufen..
+
+                    } else if (dataType.equals(Values.Payload.TYPE_PAIRING)) {
+                        // pairing-data is not encrypted with symmetrically.
+                        // It is encrypted asymmetrically from a certain point on, but this
+                        // is being handled by the GnomeLover.
+                        return packet;
+                    }
                 }
             });
 

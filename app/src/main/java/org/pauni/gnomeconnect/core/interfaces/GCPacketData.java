@@ -4,10 +4,10 @@ import org.json.JSONObject;
 
 /**
  *        If a class implements this interface, it can be
- *        put into a GCPackage as it's data.
+ *        put into a GCPacket as it's data.
  */
 
-public interface GCPackageData {
+public interface GCPacketData {
      String getType();
      JSONObject toJsonObject();
 }

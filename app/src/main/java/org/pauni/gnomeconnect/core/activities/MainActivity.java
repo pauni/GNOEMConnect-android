@@ -29,6 +29,9 @@ import org.pauni.gnomeconnect.core.service.GCBackgroundService;
 import org.pauni.gnomeconnect.core.service.ReportService;
 import org.pauni.gnomeconnect.features.impressRemote.ImpressConnector;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,9 +63,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
 
         String text = "hi this is a test msg";
-        String textEncrypted = Encryption.getSymCipher().encrypt(text, null);
-        String textDecrypted = Encryption.getSymCipher().decrypt(textEncrypted, null);
-        Log.i("OnBackPressed()", "original="+text + "\ndecrypted="+textDecrypted+"\nencrypted="+textEncrypted);
+        String textEncrypted = null;
+        try {
+            textEncrypted = Encryption.getSymCipher().encrypt(text, null);
+            String textDecrypted = Encryption.getSymCipher().decrypt(textEncrypted, null);
+            Log.i("OnBackPressed()", "original="+text + "\ndecrypted="+textDecrypted+"\nencrypted="+textEncrypted);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //startActivity(new Intent(this, ImpressConnector.class));
         //startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));

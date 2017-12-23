@@ -6,10 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- *      This class represents the phone by having all
- *      attributes which are synched with the computer. So if
- *      something on the phone changes, the changes are immediately
- *      applied to this class.
+ * SHOULD BE DELETED!!!
  */
 
 public class PhoneStatus {

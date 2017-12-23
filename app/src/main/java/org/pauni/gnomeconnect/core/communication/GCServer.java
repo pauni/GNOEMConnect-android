@@ -2,7 +2,7 @@ package org.pauni.gnomeconnect.core.communication;
 
 import android.util.Log;
 
-import org.pauni.gnomeconnect.core.models.Packet.GCPackage;
+import org.pauni.gnomeconnect.core.models.Packet.GCPacket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -66,14 +66,13 @@ class GCServer {
     }
 
 
-    GCPackage getInputLine() {
+    GCPacket getInputLine() {
 
         Log.d("GCServer","getInputLine()");
 
         try {
-            GCPackage GCPackage = new GCPackage();
             String input = in.readLine();
-            return new GCPackage(input);
+            return GCPacket.fromJsonString(input);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -81,9 +80,9 @@ class GCServer {
     }
 
 
-    boolean send(GCPackage GCPackage) {
+    boolean send(GCPacket GCPacket) {
         try {
-            out.println(GCPackage.toJsonString());
+            out.println(GCPacket.toJsonString());
             return true;
         } catch (Exception e) {
             e.printStackTrace();

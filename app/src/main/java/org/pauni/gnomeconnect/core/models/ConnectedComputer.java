@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
+import org.pauni.gnomeconnect.core.interfaces.GCPacketData;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 import org.pauni.gnomeconnect.core.communication.GCClient;
 
@@ -53,7 +53,7 @@ public class ConnectedComputer extends Computer {
     }
 
     @JsonIgnore
-    public boolean send(GCPackageData data) {
+    public boolean send(GCPacketData data) {
         return client.send(data);
     }
 }

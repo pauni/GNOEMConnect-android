@@ -2,7 +2,7 @@ package org.pauni.gnomeconnect.core.models.reports;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
+import org.pauni.gnomeconnect.core.interfaces.GCPacketData;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
 /**
@@ -15,7 +15,7 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
  */
 
 
-public class MiscReport implements GCPackageData, Protocol {
+public class MiscReport implements GCPacketData, Protocol {
     private static final String TYPE = Values.TYPE_MISC_REPORT;
 
     private static String  airplaneMode     = null;

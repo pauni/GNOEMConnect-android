@@ -1,7 +1,7 @@
 package org.pauni.gnomeconnect.features.batterySync;
 
 import org.json.JSONObject;
-import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
+import org.pauni.gnomeconnect.core.interfaces.GCPacketData;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
 /**
@@ -10,7 +10,7 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
  *
  */
 
-public class BatteryReport implements GCPackageData, Protocol {
+public class BatteryReport implements GCPacketData, Protocol {
     private static final String TYPE = Values.Payload.TYPE_USERDATA;
 
     private int level;

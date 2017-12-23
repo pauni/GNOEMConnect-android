@@ -4,7 +4,7 @@ package org.pauni.gnomeconnect.core.models;
 
 import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.encryption.Encryption;
-import org.pauni.gnomeconnect.core.interfaces.GCPackageData;
+import org.pauni.gnomeconnect.core.interfaces.GCPacketData;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 import org.pauni.gnomeconnect.core.utils.Utils;
 
@@ -13,7 +13,7 @@ import org.pauni.gnomeconnect.core.utils.Utils;
  *    for request stuff thing
  */
 
-public abstract class Pairing implements Protocol, GCPackageData  {
+public abstract class Pairing implements Protocol, GCPacketData {
     @Override
     public String getType() {
         return Values.Payload.TYPE_PAIRING;

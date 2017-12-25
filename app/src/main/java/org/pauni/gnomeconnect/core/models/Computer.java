@@ -9,8 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
-import javax.crypto.SecretKey;
-
 
 /**
  *      This represents a connected computer with GNOME Connect Desktop.
@@ -20,12 +18,12 @@ import javax.crypto.SecretKey;
 
 public class Computer implements Protocol {
     private String sharedSecret = null;
-    private String fingerprint = null;
-    private String ipAddress   = null;
-    private String hostname    = null;
-    private String model       = null;
-    private String os          = null;
-    private String version     = null;
+    private String fingerprint  = null;
+    private String ipAddress    = null;
+    private String devicename   = null;
+    private String model        = null;
+    private String os           = null;
+    private String version      = null;
 
 
     /*
@@ -44,7 +42,6 @@ public class Computer implements Protocol {
         // Json obj don't necessarily have all fields. So each is checked individually
 
 
-
         try { // fingerprint
             this.fingerprint = json.getString(Keys.Device.FINGERPRINT);
         } catch (JSONException e) {info += "field "+ Keys.Device.FINGERPRINT + " not found";}
@@ -57,13 +54,9 @@ public class Computer implements Protocol {
             this.os          = json.getString(Keys.Device.OS);
         } catch (JSONException e) {info += "field "+ Keys.Device.OS + " not found";}
 
-        try { // hostname
-            this.hostname = json.getString(Keys.Device.HOSTNAME);
-        } catch (JSONException e) {info += "field "+ Keys.Device.HOSTNAME + " not found";}
-
-        try { // model
-            this.model       = json.getString(Keys.Device.MODEL);
-        } catch (JSONException e) {info += "field "+ Keys.Device.MODEL + " not found";}
+        try { // devicename
+            this.devicename = json.getString(Keys.Device.DEVICENAME);
+        } catch (JSONException e) {info += "field "+ Keys.Device.DEVICENAME + " not found";}
 
         try { // shared secret
             this.sharedSecret = json.getString(Keys.Device.PUBLIC_KEY);
@@ -96,8 +89,8 @@ public class Computer implements Protocol {
         return model;
     }
 
-    public String getHostname() {
-        return hostname;
+    public String getDevicename() {
+        return devicename;
     }
 
     public String getOs() {
@@ -111,13 +104,13 @@ public class Computer implements Protocol {
 
     @JsonIgnore
     public boolean isComplete() {
-        Log.i("Computer", "fingerprint=" + fingerprint + " ip="+ipAddress+" model="+model+" name="+hostname+" os="+os+" version="+version);
+        Log.i("Computer", "fingerprint=" + fingerprint + " ip="+ipAddress+" model="+model+" name="+ devicename +" os="+os+" version="+version);
 
         return sharedSecret != null
                 && fingerprint != null
                 && ipAddress   != null
                 && model       != null
-                && hostname    != null
+                && devicename != null
                 && os          != null
                 && version     != null;
     }
@@ -144,8 +137,8 @@ public class Computer implements Protocol {
         this.model = model;
     }
 
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
+    public void setDevicename(String devicename) {
+        this.devicename = devicename;
     }
 
     public void setOs(String os) {

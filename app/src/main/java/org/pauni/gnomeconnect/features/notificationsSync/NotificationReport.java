@@ -12,7 +12,6 @@ import android.util.Base64;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.pauni.gnomeconnect.core.interfaces.GCPacketData;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
 import java.io.ByteArrayOutputStream;
@@ -21,7 +20,7 @@ import java.io.ByteArrayOutputStream;
  *  Contains notification data
  */
 
-public class NotificationReport implements GCPacketData, Protocol {
+public class NotificationReport implements Protocol {
     private static final String TYPE = Values.Payload.TYPE_USERDATA;
 
     private StatusBarNotification sbn;
@@ -113,12 +112,7 @@ public class NotificationReport implements GCPacketData, Protocol {
     /**
      *      OVERRIDE METHODS
      */
-    @Override
-    public String getType() {
-        return TYPE;
-    }
-
-    @Override
+    
     public JSONObject toJsonObject() {
         Notification nfc = sbn.getNotification();
         Bundle extras    = nfc.extras;

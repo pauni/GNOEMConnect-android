@@ -39,7 +39,8 @@ public class NotificationListenerSv extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         log("onNotiicationpostered");
-        comMgr.sendToAll(new NotificationReport(sbn, this));
+        //comMgr.sendToAll(new NotificationReport(sbn, this));
+        CommunicationManager.sendToAll(null);
     }
 
     private void log(String string) {

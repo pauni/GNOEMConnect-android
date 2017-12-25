@@ -46,7 +46,7 @@ public class ComputerListAdapter  extends ArrayAdapter<Computer> {
         TextView tv_computerName = convertView.findViewById(R.id.tv_computerName);
         TextView tv_computerOS   = convertView.findViewById(R.id.tv_computerOS);
 
-        tv_computerName.setText(computer.getHostname());
+        tv_computerName.setText(computer.getDevicename());
         tv_computerOS.setText(computer.getOs());
 
         return convertView;

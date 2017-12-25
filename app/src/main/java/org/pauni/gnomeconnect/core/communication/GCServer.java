@@ -2,7 +2,6 @@ package org.pauni.gnomeconnect.core.communication;
 
 import android.util.Log;
 
-import org.pauni.gnomeconnect.core.models.Packet.GCPacket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -66,13 +65,13 @@ class GCServer {
     }
 
 
-    GCPacket getInputLine() {
+    String getInputLine() {
 
         Log.d("GCServer","getInputLine()");
 
         try {
             String input = in.readLine();
-            return GCPacket.fromJsonString(input);
+            return input;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -80,9 +79,9 @@ class GCServer {
     }
 
 
-    boolean send(GCPacket GCPacket) {
+    boolean send(String string) {
         try {
-            out.println(GCPacket.toJsonString());
+            out.println(string);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

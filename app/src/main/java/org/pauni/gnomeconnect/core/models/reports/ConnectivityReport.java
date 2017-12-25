@@ -1,7 +1,6 @@
 package org.pauni.gnomeconnect.core.models.reports;
 
 import org.json.JSONObject;
-import org.pauni.gnomeconnect.core.interfaces.GCPacketData;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 
 /**
@@ -13,7 +12,7 @@ import org.pauni.gnomeconnect.core.interfaces.Protocol;
  *      is null) the constructor automatically initializes every attribute.
  */
 
-public class ConnectivityReport implements GCPacketData, Protocol {
+public class ConnectivityReport implements Protocol {
     private static final String TYPE = Values.Payload.TYPE_USERDATA;
 
 
@@ -64,10 +63,5 @@ public class ConnectivityReport implements GCPacketData, Protocol {
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public String getType() {
-        return TYPE;
     }
 }

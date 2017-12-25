@@ -130,7 +130,8 @@ public class ReportService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        comMgr.sendToAll(new NotificationReport(sbn, context));
+        //comMgr.sendToAll(new NotificationReport(sbn, context));
+        CommunicationManager.sendToAll(null);
     }
 
     private void onActionAirplaneModeChanged(Intent i) {
@@ -151,13 +152,13 @@ public class ReportService extends NotificationListenerService {
         miscReport.setHeadsetHasMic(hasMic);
         miscReport.setHeadsetName(headset);
 
-        comMgr.sendToAll(miscReport);
+        comMgr.sendToAll(null);
     }
 
     private void onActionUserPresent(Intent i) {
         MiscReport miscReport = new MiscReport();
         miscReport.setPhoneUnlocked(true);
-        comMgr.sendToAll(miscReport);
+        comMgr.sendToAll(null);
     }
 
     private void onActionScreenOnOfChanged() {

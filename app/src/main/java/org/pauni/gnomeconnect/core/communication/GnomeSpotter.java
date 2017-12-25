@@ -27,7 +27,7 @@ import java.net.InetAddress;
 public class GnomeSpotter {
     public final static String ACTION_DESKTOP_DISCOVERED = "org.pauni.gnomeconnect.COMPUTER_DISCOVERED";
     public final static String EXTRA_COMPUTER_INFO = "computerInfo";
-    private int broadcastInterval = 60 * 1000;
+    private int broadcastInterval = 10; // pause between every discovery-broadcast in seconds!;
 
 
     private Context context;
@@ -67,7 +67,7 @@ public class GnomeSpotter {
                 try {
                     while (!broadcasterThread.isInterrupted()) {
                         sendDiscoveryBroadcast();
-                        Thread.sleep(broadcastInterval);
+                        Thread.sleep(broadcastInterval*1000);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -84,7 +84,7 @@ public class GnomeSpotter {
             @Override
             public void run() {
                 try {
-                    UDPServer server = new UDPServer(Protocol.NETWORK_PORT, context);
+                    UDPServer server = new UDPServer(Protocol.TCP_PORT, context);
                     while (!responseListenerThread.isInterrupted()) {
                         String input        = server.receive();         //wait4input
                         Computer computer   = new Computer(input);      //json2comp
@@ -113,11 +113,11 @@ public class GnomeSpotter {
     private void sendDiscoveryBroadcast() {
         try {
             String msg = "Hello someone there?";
-            DatagramPacket packet = new DatagramPacket(msg.getBytes(), msg.length(), getBroadcastAddr(), Protocol.NETWORK_PORT);
+            DatagramPacket packet = new DatagramPacket(msg.getBytes(), msg.length(), getBroadcastAddr(), Protocol.TCP_PORT);
             DatagramSocket socket = new DatagramSocket();
             socket.send(packet);
             socket.close();
-            Log.i("Utils", "sendBroadcast()");
+            Log.i("GnomeSpotter", "sendDisccoveryBroadcast(): " + msg);
         } catch (IOException e) {
             e.printStackTrace();
         }

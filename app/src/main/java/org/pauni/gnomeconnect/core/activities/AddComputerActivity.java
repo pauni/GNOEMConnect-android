@@ -189,12 +189,12 @@ public class AddComputerActivity extends AppCompatActivity {
         try {
             // Convert jackson-string back to Computer-obj
             ObjectMapper mapper = new ObjectMapper();
-            Computer computer = mapper.readValue(jackson, Computer.class);
+            Computer computer   = mapper.readValue(jackson, Computer.class);
 
             // add computer to list
             computers.add(computer);
 
-            // remove duplicates
+            // remove duplicates from list
             Set<Computer> computersNoDup = new HashSet<>(computers);
             computers = new ArrayList<>(computersNoDup);
 

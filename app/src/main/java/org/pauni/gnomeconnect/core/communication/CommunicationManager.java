@@ -1,12 +1,7 @@
 package org.pauni.gnomeconnect.core.communication;
 
-
-import android.util.Log;
-
-import org.pauni.gnomeconnect.core.interfaces.GCPacketData;
 import org.pauni.gnomeconnect.core.models.Computer;
-import org.pauni.gnomeconnect.core.models.ConnectedComputer;
-import org.pauni.gnomeconnect.core.models.Packet.GCPacket;
+import org.pauni.gnomeconnect.core.models.ComputerConnection;
 import org.pauni.gnomeconnect.core.models.Prefs;
 
 import java.util.ArrayList;
@@ -23,36 +18,30 @@ import java.util.List;
 
 
 public class CommunicationManager {
-    private static List<ConnectedComputer> connectedComputers = new ArrayList<>(); // connected computers
+    private static List<ComputerConnection> computerConnections = new ArrayList<>(); // connected computers
 
 
     public CommunicationManager() {
         updateList();
     }
 
-    public static void sendToAll(GCPacketData data) {
-        Log.i("sendToAll", "called()");
+    public static void sendToAll(String output) {
         try {
             // Send the report to every connected computer
-            for (ConnectedComputer computer : connectedComputers) {
-                GCPacket output = GCPacket.buildGCPacket(data);
-                Log.i("sendToAll", output.getData().toString());
-                // TODO: computer.send(output);
+            for (ComputerConnection computer : computerConnections) {
+                // TODO: build method
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static boolean sendToComputer(Computer computer, GCPacketData data) {
-        // TODO: build method.
-        return false;
-    }
+
 
     // Adds newly added computers to the list
     public static void updateList() {
         for (Computer computer : Prefs.getConnectedComputers()) {
-            connectedComputers.add((ConnectedComputer) computer);
+            computerConnections.add((ComputerConnection) computer);
         }
     }
 

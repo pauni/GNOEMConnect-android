@@ -60,7 +60,7 @@ public class BatteryChangedListener implements Protocol {
                 BatteryChangedListener.this.chrg = chrg;
 
                 BatteryReport report = new BatteryReport(lvl, tmp, chrg);
-                CommunicationManager.sendToAll(report);
+                CommunicationManager.sendToAll(null);
             }
         };
     }

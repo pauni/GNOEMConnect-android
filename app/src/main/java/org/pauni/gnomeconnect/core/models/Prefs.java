@@ -8,18 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.pauni.gnomeconnect.core.communication.CommunicationManager;
 
-import java.io.PrintWriter;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.MessageDigest;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.crypto.spec.SecretKeySpec;
 
 
 /**
@@ -55,7 +46,7 @@ public class Prefs {
     }
 
     public static String getString(String key) {
-        return prefs.getString(key, "");
+        return prefs.getString(key, null);
     }
 
 
@@ -85,7 +76,7 @@ public class Prefs {
     /*
     *   Save and get GNOME Connect Desktops
     */
-    public static boolean saveComputerConnection(ConnectedComputer connectedComputer) {
+    public static boolean saveComputerConnection(ComputerConnection connectedComputer) {
         try {
             Set<String> set = Prefs.getStringSet(Prefs.KEY_CONNECTED_COMPUTERS); // get the existing set
             String jackson = new ObjectMapper().writeValueAsString(connectedComputer);    // convert Computer to JSONString
@@ -106,7 +97,7 @@ public class Prefs {
 
         for (String computerJackson : set) {
             try {
-                ConnectedComputer computer = mapper.readValue(computerJackson, ConnectedComputer.class);
+                ComputerConnection computer = mapper.readValue(computerJackson, ComputerConnection.class);
                 connectedComputers.add(computer);
             } catch (Exception e) { e.printStackTrace(); }
         }

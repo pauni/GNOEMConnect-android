@@ -24,9 +24,11 @@ import org.pauni.gnomeconnect.R;
 import org.pauni.gnomeconnect.core.adapters.ComputerListAdapter;
 import org.pauni.gnomeconnect.core.encryption.Encryption;
 import org.pauni.gnomeconnect.core.interfaces.GCFeature;
+import org.pauni.gnomeconnect.core.models.Pairing;
 import org.pauni.gnomeconnect.core.models.Prefs;
 import org.pauni.gnomeconnect.core.service.GCBackgroundService;
 import org.pauni.gnomeconnect.core.service.ReportService;
+import org.pauni.gnomeconnect.core.utils.Utils;
 import org.pauni.gnomeconnect.features.impressRemote.ImpressConnector;
 
 import java.io.UnsupportedEncodingException;
@@ -59,18 +61,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // code below will be executed on back-button press...
-        Toast.makeText(this, "Disabled, to use as a trigger to test code. Sorry",
+        Toast.makeText(this, "Disabled, to run test-code. Sorry! :(",
                 Toast.LENGTH_SHORT).show();
 
-        String text = "hi this is a test msg";
-        String textEncrypted = null;
-        try {
-            textEncrypted = Encryption.getSymCipher().encrypt(text, null);
-            String textDecrypted = Encryption.getSymCipher().decrypt(textEncrypted, null);
-            Log.i("OnBackPressed()", "original="+text + "\ndecrypted="+textDecrypted+"\nencrypted="+textEncrypted);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //String text = "hi this is a test msg";
+        //String textEncrypted = null;
+        //try {
+        //    textEncrypted = Encryption.getSymCipher().encrypt(text, null);
+        //    String textDecrypted = Encryption.getSymCipher().decrypt(textEncrypted, null);
+        //    Log.i("OnBackPressed()", "original="+text + "\ndecrypted="+textDecrypted+"\nencrypted="+textEncrypted);
+        //} catch (Exception e) {
+        //    e.printStackTrace();
+        //}
+
+        Log.i("onBackPressed", Pairing.buildDeviceInfo().toString());
+        Toast.makeText(this, Utils.getDeviceName(), Toast.LENGTH_LONG).show();
 
         //startActivity(new Intent(this, ImpressConnector.class));
         //startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));

@@ -1,18 +1,19 @@
 package org.pauni.gnomeconnect.core.communication;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import org.pauni.gnomeconnect.R;
-import org.pauni.gnomeconnect.core.encryption.Encryption;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 import org.pauni.gnomeconnect.core.models.Computer;
-import org.pauni.gnomeconnect.core.models.ConnectedComputer;
-import org.pauni.gnomeconnect.core.models.Pairing;
+import org.pauni.gnomeconnect.core.models.ComputerConnection;
 import org.pauni.gnomeconnect.core.models.Prefs;
+
+import java.util.Random;
 
 
 /**
@@ -20,6 +21,7 @@ import org.pauni.gnomeconnect.core.models.Prefs;
  */
 
 public class GnomeLover implements Protocol {
+    private Context context;
     private Computer lovedOne;
     private Activity activity; // used to perform actions on UI thread
     private ImageView iv_statusIcon;
@@ -37,6 +39,7 @@ public class GnomeLover implements Protocol {
      */
     public GnomeLover(Activity activity, View clickedView) {
         this.activity = activity;
+        context = activity.getApplicationContext();
         iv_statusIcon = clickedView.findViewById(R.id.iv_statusIcon);
         tv_statusText = clickedView.findViewById(R.id.tv_statusText);
 
@@ -64,60 +67,24 @@ public class GnomeLover implements Protocol {
             @Override
             public void run() {
                 try {
-                    Computer computer = new Computer();
+                    /*
+                     * TO UNDERSTAND THE STEPS, READ:
+                     * https://github.com/pauni/GNOMEConnect-desktop/blob/wip/roadmap.md
+                     */
 
                     GCClient client = new GCClient(lovedOne.getIpAddress());
 
-                    client.send(Pairing.Step1()); // send request
+                    boolean connected = client.connect(Values.ConnectionRequest.TYPE_PAIRING);
 
-                    int step = client.getInput().getData().getInt(Keys.Pairing.STEP);
-
-                    if (step == Values.Pairing.STEP_1) {
-                        String publicKey = client.getInput().getData().getString(Keys.Pairing.DATA);
-
-                        client.send(Pairing.Step2());
-
-                        step = client.getInput().getData().getInt(Keys.Pairing.STEP);
+                    if (!connected) {
+                        setState(STATE_FAILED, "connection refused");
+                        return;
                     }
 
-                    if (step == Values.Pairing.STEP_2) {
-                        String publicKey = client.getInput().getData().getString(Keys.Pairing.DATA);
-
-                        client.send(Pairing.Step3());
-
-                        step = client.getInput().getData().getInt(Keys.Pairing.STEP);
-                    }
-
-                    if (step == Values.Pairing.STEP_3) {
-                        // ask user if he wants to connect...
-
-                        //client.send(Pairing.Step4());
-
-                    }
-
-                    String sharedSecretHalf1 = "random";
-                    if (step == Values.Pairing.STEP_4) {
-                        boolean accepted = client.getInput().getData().getBoolean(Keys.Pairing.DATA);
-
-                        if (accepted) {
-                            client.send(Pairing.Step5(sharedSecretHalf1));
-                        } else {
-                            return;
-                        }
-
-                        step = client.getInput().getData().getInt(Keys.Pairing.STEP);
-                    }
-
-                    if (step == Values.Pairing.STEP_5) {
-                        String sharedSecretHalf2 = client.getInput().getData().getString(Keys.Pairing.DATA);
-                        client.send(Pairing.Step6(sharedSecretHalf2));
-                        Encryption.createSharedSecret(sharedSecretHalf1+sharedSecretHalf2);
-                    }
+                    String input = client.getInput();
 
 
 
-
-                    client.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                     setState(STATE_FAILED, null);
@@ -127,10 +94,18 @@ public class GnomeLover implements Protocol {
 
     }
 
+    private String generateRandomString() {
+        Random ran = new Random();
+        byte[] r = new byte[256]; //Means 2048 bit
+        ran.nextBytes(r);
+        return new String(r)  ;
+    }
+
+
     private boolean saveComputer(Computer computer) {
         try {
             // if some values are missing, don't save the computer
-            return Prefs.saveComputerConnection(new ConnectedComputer(computer));
+            return Prefs.saveComputerConnection(new ComputerConnection(computer));
         } catch (Exception e) {
             e.printStackTrace();
             return false;

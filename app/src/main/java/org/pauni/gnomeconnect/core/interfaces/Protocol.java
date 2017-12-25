@@ -1,5 +1,11 @@
 package org.pauni.gnomeconnect.core.interfaces;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.pauni.gnomeconnect.core.utils.Utils;
+
+import java.security.Key;
+
 /**
  *      Contains all keys/field names we use. It's all in one file to make it
  *      easier to maintain, make changes etc.
@@ -12,18 +18,27 @@ public interface Protocol {
      *      JSON KEYS. NAMES OF THE FIELDS USED IN GNOME CONNECT
      */
 
+    class Commands {
+        public static String buildConnectionRequest(String type) throws JSONException {
+            JSONObject connectionRequest = new JSONObject();
+            connectionRequest.put(Keys.ConnectionRequest.FINGERPRINT, Utils.getFingerprint());
+            connectionRequest.put(Keys.ConnectionRequest.TYPE, type);
+            return connectionRequest.toString();
+        }
+    }
 
     class Keys {
+        public class ConnectionRequest {
+            public static final String FINGERPRINT   = "fingerprint";
+            public static final String TYPE          = "type";
+            public static final String AUTHENTICATED = "authenticated";
+        }
+
         public class Packet {
             public static final String SRC_FINGERPRINT = "src_fingerprint";
             public static final String DST_FINGERPRINT = "dst_fingerprint";
             public static final String VERSION         = "version";
             public static final String PAYLOAD         = "payload";
-        }
-
-        public class Payload {
-            public static final String TYPE = "payload_type";
-            public static final String DATA = "payload_data";
         }
 
         public class Pairing {
@@ -34,8 +49,7 @@ public interface Protocol {
         public class Device {
             public static final String FINGERPRINT  = "fingerprint";
             public static final String PUBLIC_KEY   = "public_key";
-            public static final String HOSTNAME     = "hostname";
-            public static final String MODEL        = "model";
+            public static final String DEVICENAME   = "devicename";
             public static final String OS           = "os";
 
         }
@@ -70,6 +84,11 @@ public interface Protocol {
 
         }
 
+        public class ConnectionRequest {
+            public static final String TYPE_PAIRING   = "pairing";
+            public static final String TYPE_ENCRYPTED = "encrypted";
+        }
+
         public class Payload {
             public static final String TYPE_USERDATA = "userdata";
             public static final String TYPE_PAIRING  = "pairing";
@@ -87,11 +106,7 @@ public interface Protocol {
         }
 
         // PAYLOAD TYPE VALUES
-        public static final String TYPE_NOTIFICATION_REPORT = "notification_report";
-        public static final String TYPE_CONNECTIVITY_REPORT = "connectivity_report";
-        public static final String TYPE_POWER_REPORT        = "power_report";
         public static final String TYPE_MISC_REPORT         = "misc_report";
-        public static final String TYPE_PAIRREQUEST         = "pairrequest";
 
 
         // POWER REPORT VALUES
@@ -105,5 +120,5 @@ public interface Protocol {
      *      PORT
      */
 
-    int NETWORK_PORT = 4112;
+    int TCP_PORT = 4112;
 }

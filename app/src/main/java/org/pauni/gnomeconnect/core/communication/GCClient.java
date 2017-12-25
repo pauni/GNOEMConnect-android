@@ -2,21 +2,21 @@ package org.pauni.gnomeconnect.core.communication;
 
 import android.util.Log;
 
-import org.pauni.gnomeconnect.core.interfaces.GCPacketData;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
-import org.pauni.gnomeconnect.core.models.Packet.GCPacket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.security.Key;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 
 /**
@@ -26,35 +26,42 @@ import java.util.concurrent.TimeoutException;
 
 public class GCClient implements Protocol {
 
-    private Socket          client;
-    private PrintWriter     out;
-    private static final int PORT = 4112;
+    private Socket         client;
+    private PrintWriter    out = null;
+    private BufferedReader in;
 
     public GCClient(String ip) throws Exception {
-        client = new Socket(ip, PORT);
+        client = new Socket(ip, TCP_PORT);
+
         Log.i("GCClient", "Constructor  successful");
     }
 
 
-    public boolean isBound() {
-        return client.isBound();
+    public boolean connect(String type) {
+        try {
+            out = new PrintWriter(client.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
+            out.println(Commands.buildConnectionRequest(type));
+
+            String input = in.readLine();
+
+            return (new JSONObject(input)).getBoolean(Keys.ConnectionRequest.AUTHENTICATED);
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public boolean send(final GCPacketData data) {
+    public boolean send(String output) {
         /*
          * Sends packets. Go to models.GCPacket for more details
          */
 
-
         try {
-            GCPacket gcPacket = GCPacket.buildGCPacket(data);
+            out.println(output);
 
-            out = new PrintWriter(client.getOutputStream(), true);
-
-            out.println(gcPacket.toJsonString());
-
-            Log.i("GCClient", "send=" + gcPacket.toJsonString());
-
+            Log.i("GCClient", "send(): " + output);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,27 +69,25 @@ public class GCClient implements Protocol {
         }
     }
 
-    public GCPacket getInput() {
+
+    String getInput() {
         /*
          *  Waits for 30 seconds for input
          */
 
         try {
-            final BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-            Future<GCPacket> input = Executors.newSingleThreadExecutor().submit(new Callable<GCPacket>() {
+            Future<String> input = Executors.newSingleThreadExecutor().submit(new Callable<String>() {
                 @Override
-                public GCPacket call() throws Exception {
+                public String call() throws Exception {
                     String input = in.readLine();
-                    Log.i("GCClient", "getInputLine="+input);
+                    Log.i("GCClient", "getInputLine(): "+input);
 
-                    return GCPacket.fromJsonString(input);
+                    return input;
                 }
             });
-
             // Abort after 30 seconds
             return input.get(30, TimeUnit.SECONDS);
-        } catch (IOException | InterruptedException | ExecutionException | TimeoutException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

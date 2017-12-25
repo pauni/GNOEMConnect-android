@@ -5,10 +5,7 @@ import android.util.Base64;
 import org.pauni.gnomeconnect.core.models.Prefs;
 
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.Arrays;
 
 import javax.crypto.SecretKey;
@@ -54,38 +51,4 @@ public class Encryption {
         }
     }
 
-    public static PublicKey getPublicKey() {
-        try {
-            return getKeyPair().getPublic();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static PrivateKey getPrivateKey() {
-        try {
-            return getKeyPair().getPrivate();
-        } catch (Exception e ) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private static KeyPair getKeyPair() {
-        if (pair!= null) {
-            return pair;
-        }
-
-        try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-            pair = keyPairGenerator.generateKeyPair();
-
-            return pair;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

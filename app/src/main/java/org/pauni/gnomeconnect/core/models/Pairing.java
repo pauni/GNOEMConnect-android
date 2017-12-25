@@ -2,9 +2,10 @@ package org.pauni.gnomeconnect.core.models;
 
 
 
+import android.content.Context;
+import android.os.Build;
+
 import org.json.JSONObject;
-import org.pauni.gnomeconnect.core.encryption.Encryption;
-import org.pauni.gnomeconnect.core.interfaces.GCPacketData;
 import org.pauni.gnomeconnect.core.interfaces.Protocol;
 import org.pauni.gnomeconnect.core.utils.Utils;
 
@@ -13,12 +14,7 @@ import org.pauni.gnomeconnect.core.utils.Utils;
  *    for request stuff thing
  */
 
-public abstract class Pairing implements Protocol, GCPacketData {
-    @Override
-    public String getType() {
-        return Values.Payload.TYPE_PAIRING;
-    }
-
+public abstract class Pairing implements Protocol {
 
 
     /**
@@ -26,121 +22,21 @@ public abstract class Pairing implements Protocol, GCPacketData {
      *  for requesting, accepting, denying pairing.
      */
 
-    public static Pairing Step1() {
-        return new Pairing() {
-            @Override
-            public JSONObject toJsonObject() {
-                try {
-                    JSONObject pairingPacket = new JSONObject();
+    public static JSONObject buildDeviceInfo() {
+        JSONObject device = new JSONObject();
 
-                    pairingPacket.put(Keys.Pairing.STEP, Values.Pairing.STEP_1);
-                    pairingPacket.put(Keys.Pairing.DATA, Encryption.getPublicKey());
+        try {
+            device.put(Keys.Device.FINGERPRINT, Utils.getFingerprint());
+            device.put(Keys.Device.PUBLIC_KEY, Utils.getPublicKey());
+            device.put(Keys.Device.DEVICENAME, Utils.getDeviceName());
+            device.put(Keys.Device.OS, Build.VERSION.CODENAME + " " + Build.VERSION.SDK_INT);
 
-                    return pairingPacket;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        };
+            return device;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public static Pairing Step2() {
-        return new Pairing() {
-            @Override
-            public JSONObject toJsonObject() {
-                try {
-                    JSONObject pairingPacket = new JSONObject();
 
-                    pairingPacket.put(Keys.Pairing.STEP, Values.Pairing.STEP_2);
-                    pairingPacket.put(Keys.Pairing.DATA, Encryption.getPublicKey());
-
-                    return pairingPacket;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        };
-    }
-
-    public static Pairing Step3() {
-        return new Pairing() {
-            @Override
-            public JSONObject toJsonObject() {
-                try {
-                    JSONObject pairingPacket = new JSONObject();
-
-                    String name = Utils.getModelName();
-                    pairingPacket.put(Keys.Pairing.STEP, Values.Pairing.STEP_3);
-                    pairingPacket.put(Keys.Pairing.DATA, name);
-
-                    return pairingPacket;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        };
-    }
-
-    public static Pairing Step4() {
-        return new Pairing() {
-            @Override
-            public JSONObject toJsonObject() {
-                try {
-                    JSONObject pairingPacket = new JSONObject();
-
-
-                    pairingPacket.put(Keys.Pairing.STEP, Values.Pairing.STEP_4);
-                    pairingPacket.put(Keys.Pairing.DATA, true);
-
-                    return pairingPacket;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        };
-    }
-
-    public static Pairing Step5(final String randomString) {
-        return new Pairing() {
-            @Override
-            public JSONObject toJsonObject() {
-                try {
-                    JSONObject pairingPacket = new JSONObject();
-
-
-                    pairingPacket.put(Keys.Pairing.STEP, Values.Pairing.STEP_5);
-                    pairingPacket.put(Keys.Pairing.DATA, randomString);
-
-                    return pairingPacket;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        };
-    }
-
-    public static Pairing Step6(final String randomString) {
-        return new Pairing() {
-            @Override
-            public JSONObject toJsonObject() {
-                try {
-                    JSONObject pairingPacket = new JSONObject();
-
-
-                    pairingPacket.put(Keys.Pairing.STEP, Values.Pairing.STEP_5);
-                    pairingPacket.put(Keys.Pairing.DATA, randomString);
-
-                    return pairingPacket;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        };
-    }
 }
